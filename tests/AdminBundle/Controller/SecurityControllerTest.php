@@ -11,6 +11,8 @@ class SecurityControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/login');
+
+        $this->assertContains('Username', $client->getResponse()->getContent());
     }
 
 }
