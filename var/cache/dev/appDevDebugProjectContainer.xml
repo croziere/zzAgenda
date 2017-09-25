@@ -16,7 +16,8 @@
       <parameter key="SwiftmailerBundle">Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle</parameter>
       <parameter key="DoctrineBundle">Doctrine\Bundle\DoctrineBundle\DoctrineBundle</parameter>
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
-      <parameter key="AppBundle">AppBundle\AppBundle</parameter>
+      <parameter key="AdminBundle">AdminBundle\AdminBundle</parameter>
+      <parameter key="EventBundle">EventBundle\EventBundle</parameter>
       <parameter key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
@@ -59,10 +60,15 @@
         <parameter key="path">/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/vendor/sensio/framework-extra-bundle</parameter>
         <parameter key="namespace">Sensio\Bundle\FrameworkExtraBundle</parameter>
       </parameter>
-      <parameter key="AppBundle" type="collection">
+      <parameter key="AdminBundle" type="collection">
         <parameter key="parent">null</parameter>
-        <parameter key="path">/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/src/AppBundle</parameter>
-        <parameter key="namespace">AppBundle</parameter>
+        <parameter key="path">/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/src/AdminBundle</parameter>
+        <parameter key="namespace">AdminBundle</parameter>
+      </parameter>
+      <parameter key="EventBundle" type="collection">
+        <parameter key="parent">null</parameter>
+        <parameter key="path">/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/src/EventBundle</parameter>
+        <parameter key="namespace">EventBundle</parameter>
       </parameter>
       <parameter key="DebugBundle" type="collection">
         <parameter key="parent">null</parameter>
@@ -413,10 +419,6 @@
   </parameters>
   <services>
     <service id="service_container" class="Symfony\Component\DependencyInjection\ContainerInterface" synthetic="true"/>
-    <service id="AppBundle\AppBundle" class="AppBundle\AppBundle" public="false" autowire="true" autoconfigure="true"/>
-    <service id="AppBundle\Controller\DefaultController" class="AppBundle\Controller\DefaultController" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-    </service>
     <service id="controller_name_converter" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser" public="false">
       <tag name="monolog.logger" channel="request"/>
       <argument type="service" id="kernel"/>
@@ -433,7 +435,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
       <tag name="controller.argument_value_resolver" priority="-50"/>
-      <argument type="service" id="service_locator.ebdaf59977bc26dc6a191d4f5f8254cb"/>
+      <argument type="service" id="service_locator.6f24348b77840ec12a20c22a3f985cf7"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false">
       <tag name="controller.argument_value_resolver" priority="-100"/>
@@ -601,7 +603,7 @@
       <tag name="monolog.logger" channel="cache"/>
       <argument></argument>
       <argument>0</argument>
-      <argument>xhuaBY9Jp+8qOzh61mJL1x</argument>
+      <argument>bnfjV97pIZ0qhhZ3QRbeer</argument>
       <argument>/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -611,7 +613,7 @@
       <tag name="monolog.logger" channel="cache"/>
       <argument></argument>
       <argument>0</argument>
-      <argument>xhuaBY9Jp+8qOzh61mJL1x</argument>
+      <argument>bnfjV97pIZ0qhhZ3QRbeer</argument>
       <call method="setLogger">
         <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       </call>
@@ -1368,14 +1370,6 @@
       </call>
       <call method="addListener">
         <argument>kernel.request</argument>
-        <argument type="collection">
-          <argument type="service" id="debug.debug_handlers_listener"/>
-          <argument>configure</argument>
-        </argument>
-        <argument>2048</argument>
-      </call>
-      <call method="addListener">
-        <argument>console.command</argument>
         <argument type="collection">
           <argument type="service" id="debug.debug_handlers_listener"/>
           <argument>configure</argument>
@@ -2161,12 +2155,12 @@
     </service>
     <service id="security.authentication.listener.anonymous.main" class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
       <argument type="service" id="security.token_storage"/>
-      <argument>59c929ded806b2.90614009</argument>
+      <argument>59c92fd3ba4695.17129708</argument>
       <argument type="service" id="monolog.logger.security" on-invalid="null"/>
       <argument type="service" id="security.authentication.manager"/>
     </service>
     <service id="security.authentication.provider.anonymous.main" class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-      <argument>59c929ded806b2.90614009</argument>
+      <argument>59c92fd3ba4695.17129708</argument>
     </service>
     <service id="security.exception_listener.main" class="Symfony\Component\Security\Http\Firewall\ExceptionListener" public="false">
       <argument type="service" id="security.token_storage"/>
@@ -2344,6 +2338,14 @@
         <argument>Doctrine</argument>
       </call>
       <call method="addPath">
+        <argument>/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/src/AdminBundle/Resources/views</argument>
+        <argument>Admin</argument>
+      </call>
+      <call method="addPath">
+        <argument>/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/src/EventBundle/Resources/views</argument>
+        <argument>Event</argument>
+      </call>
+      <call method="addPath">
         <argument>/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views</argument>
         <argument>Debug</argument>
       </call>
@@ -2484,6 +2486,14 @@
       <call method="addPath">
         <argument>/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/vendor/doctrine/doctrine-bundle/Resources/views</argument>
         <argument>Doctrine</argument>
+      </call>
+      <call method="addPath">
+        <argument>/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/src/AdminBundle/Resources/views</argument>
+        <argument>Admin</argument>
+      </call>
+      <call method="addPath">
+        <argument>/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/src/EventBundle/Resources/views</argument>
+        <argument>Event</argument>
       </call>
       <call method="addPath">
         <argument>/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views</argument>
@@ -3129,13 +3139,7 @@
     <service id="web_server.command.server_status" class="Symfony\Bundle\WebServerBundle\Command\ServerStatusCommand" public="false">
       <tag name="console.command"/>
     </service>
-    <service id="instanceof.Symfony\Bundle\FrameworkBundle\Controller\Controller.0.AppBundle\Controller\DefaultController" class="AppBundle\Controller\DefaultController" autowire="true" abstract="true"/>
-    <service id="abstract.instanceof.AppBundle\Controller\DefaultController" class="AppBundle\Controller\DefaultController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id="service_locator.4f8384c8862c511eefe34301cff90111" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
-      <tag name="container.service_locator"/>
-      <argument type="collection"/>
-    </service>
-    <service id="service_locator.ebdaf59977bc26dc6a191d4f5f8254cb" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id="service_locator.6f24348b77840ec12a20c22a3f985cf7" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection"/>
     </service>
@@ -3351,7 +3355,7 @@
     <service id="cache.system.recorder_inner" class="Symfony\Component\Cache\Adapter\AdapterInterface" public="false" lazy="true">
       <argument>FVVyU5lRW-</argument>
       <argument>0</argument>
-      <argument>xhuaBY9Jp+8qOzh61mJL1x</argument>
+      <argument>bnfjV97pIZ0qhhZ3QRbeer</argument>
       <argument>/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -3359,7 +3363,7 @@
     <service id="cache.validator.recorder_inner" class="Symfony\Component\Cache\Adapter\AdapterInterface" public="false" lazy="true">
       <argument>qAukTVb3TW</argument>
       <argument>0</argument>
-      <argument>xhuaBY9Jp+8qOzh61mJL1x</argument>
+      <argument>bnfjV97pIZ0qhhZ3QRbeer</argument>
       <argument>/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -3367,7 +3371,7 @@
     <service id="cache.serializer.recorder_inner" class="Symfony\Component\Cache\Adapter\AdapterInterface" public="false" lazy="true">
       <argument>w8cVQFcJi-</argument>
       <argument>0</argument>
-      <argument>xhuaBY9Jp+8qOzh61mJL1x</argument>
+      <argument>bnfjV97pIZ0qhhZ3QRbeer</argument>
       <argument>/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -3375,7 +3379,7 @@
     <service id="cache.annotations.recorder_inner" class="Symfony\Component\Cache\Adapter\AdapterInterface" public="false" lazy="true">
       <argument>DGVr3tVcqW</argument>
       <argument>0</argument>
-      <argument>xhuaBY9Jp+8qOzh61mJL1x</argument>
+      <argument>bnfjV97pIZ0qhhZ3QRbeer</argument>
       <argument>/Users/benjamin/ISIMA/2A/CIWEB/zzAgenda/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
