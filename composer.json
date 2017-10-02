@@ -4,6 +4,7 @@
     "type": "project",
     "autoload": {
         "psr-4": {
+            "":"src/"
         },
         "classmap": [
             "app/AppKernel.php",
@@ -32,6 +33,7 @@
         "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
+        "laravel/homestead": "^6.2",
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0"
     },
