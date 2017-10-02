@@ -6,6 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class EventControllerTest extends WebTestCase
 {
+    public function testEventList()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/event/');
+
+        $this->assertContains('Conférences', $crawler->html());
+    }
+
     /*
     public function testCompleteScenario()
     {
