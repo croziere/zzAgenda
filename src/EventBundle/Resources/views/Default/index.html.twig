@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell mdl-cell--2-col"></div>
+        <div class="mdl-cell mdl-cell mdl-cell--8-col">
+            {% for event in events %}
+                {% include '@Event/event/event_card.html.twig' %}
+            {% endfor %}
+        </div>
+        <div class="mdl-cell mdl-cell mdl-cell--2-col"></div>
+    </div>
+
+{% endblock %}
