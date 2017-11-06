@@ -11,7 +11,7 @@
 namespace ZZFramework\Application;
 
 
-use ZZFramework\DependencyInjection\Container;
+use ZZFramework\DependencyInjection\ContainerBuilder as Container;
 use ZZFramework\Http\HttpProcessorInterface;
 use ZZFramework\Http\Request;
 

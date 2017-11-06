@@ -10,6 +10,8 @@
 
 namespace ZZFramework\DependencyInjection;
 
+use ZZFramework\DependencyInjection\Exception\ServiceNotFoundException;
+
 /**
  * Class Container
  * Simple implementation of a DIC Container
@@ -49,6 +51,7 @@ class Container implements ContainerInterface
      * Returns a service from the Container
      * @param $id
      * @return mixed
+     * @throws ServiceNotFoundException
      */
     public function get($id)
     {
