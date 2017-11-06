@@ -11,11 +11,13 @@
 namespace ZZFramework\Http;
 
 
+use ZZFramework\Event\Event;
 use ZZFramework\Event\EventDispatcherInterface;
 use ZZFramework\Http\Controller\ControllerResolverInterface;
 use ZZFramework\Http\Event\BeforeSendResponseEvent;
 use ZZFramework\Http\Event\ControllerResolvedEvent;
 use ZZFramework\Http\Event\GetResponseEvent;
+use ZZFramework\Http\Event\GetResponseForExceptionEvent;
 use ZZFramework\Http\Event\GetResponseFromResultEvent;
 use ZZFramework\Http\Event\HttpEvents;
 
@@ -90,9 +92,14 @@ class HttpProcessor implements HttpProcessorInterface
 
     private function handleException($e, Request $request)
     {
-        $response = new Response();
-        $response->setContent("Oops, exception! : ".$e);
-        return $response;
+        $event = new GetResponseForExceptionEvent($request, $this, $e);
+        $this->eventDispatcher->dispatch(HttpEvents::EXCEPTION, $event);
+
+        if(!$event->hasResponse()) {
+            throw new \Exception("Panic! No class to handle kernel exception", 0, $e);
+        }
+
+        return $event->getResponse();
     }
 
     private function beforeSend($response, $request)

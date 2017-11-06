@@ -20,6 +20,8 @@ class ApplicationKernel extends AbstractApplicationKernel
     {
         return array(
             new \ZZFramework\Module\ConfigModule\ConfigModule(),
+            new \ZZFramework\Module\ExceptionModule\ExceptionModule(),
+            new \ZZFramework\Module\TwigModule\TwigModule(),
         );
     }
 }
