@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Ajouter un evenement
+{% endblock %}
+
+{% block body %}
+<div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 well well-sm">
+            <legend><a href="http://www.jquery2dotnet.com"><i class="glyphicon glyphicon-globe"></i></a> Evenement</legend>
+
+            <form action="#" method="post" class="form" role="form">
+            <input class="form-control" name="eventName" placeholder="Nom de l'évènement" type="text" />
+            <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required" placeholder="Message"></textarea>
+            <label for="">
+                Date de l'évènement</label>
+            <div class="row">
+                <div class="col-xs-4 col-md-4">
+                    <select class="form-control">
+                        <option value="Day">Jour</option>
+                    </select>
+                </div>
+                <div class="col-xs-4 col-md-4">
+                    <select class="form-control">
+                        <option value="Month">Mois</option>
+                    </select>
+                </div>
+                <div class="col-xs-4 col-md-4">
+                    <select class="form-control">
+                        <option value="Year">2017</option>
+                        <option value="Year">2018</option>
+                    </select>
+                </div>
+            </div>
+            <label>Lieu</label>
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <select class="form-control">
+                        <option value="Tipo">Batiment commun : G110</option>
+                        <option value="Tipo">Batiment commun : G020</option>
+                        <option value="Tipo">Batiment isima : A110</option>
+                        <option value="Tipo">Batiment isima : A129</option>
+                    </select>
+                </div>    
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">
+                Ajouter l'évènement</button>
+            </form>
+        </div>
+    </div>
+    
+    
+{% endblock %}
