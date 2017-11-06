@@ -1,0 +1,11 @@
+{
+    "name": "croziere/zz-agenda",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Benjamin Rozière",
+            "email": "benjamin.roziere@rdalambic.com"
+        }
+    ],
+    "require": {}
+}
