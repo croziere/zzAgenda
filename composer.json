@@ -7,5 +7,7 @@
             "email": "benjamin.roziere@rdalambic.com"
         }
     ],
-    "require": {}
+    "require": {
+        "twig/twig": "^2.4"
+    }
 }
