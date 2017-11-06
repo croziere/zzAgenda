@@ -8,10 +8,14 @@
  * file that was distributed with this source code.
  */
 
-namespace ZZFramework\DependencyInjection;
+namespace ZZFramework\Http\Controller;
 
 
-interface ContainerRegisterInterface
+use ZZFramework\Http\Request;
+
+interface ControllerResolverInterface
 {
-    public function registerExtensions(ContainerBuilderInterface $container);
+    public function getController(Request $request);
+
+    public function getArguments(Request $request, $controller);
 }

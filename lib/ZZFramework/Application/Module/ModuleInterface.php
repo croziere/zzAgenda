@@ -8,10 +8,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ZZFramework\DependencyInjection;
+namespace ZZFramework\Application\Module;
 
 
-interface ContainerRegisterInterface
+interface ModuleInterface
 {
-    public function registerExtensions(ContainerBuilderInterface $container);
+    public function boot();
+
+    public function getName();
 }

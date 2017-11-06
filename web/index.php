@@ -8,10 +8,13 @@
  * file that was distributed with this source code.
  */
 
-namespace ZZFramework\DependencyInjection;
+use App\ApplicationKernel;
+use ZZFramework\Http\Request;
 
+require_once __DIR__.'/../app/bootstrap.php.cache';
+$kernel = new ApplicationKernel('dev', true);
 
-interface ContainerRegisterInterface
-{
-    public function registerExtensions(ContainerBuilderInterface $container);
-}
+$request = Request::fromContext();
+$response = $kernel->handle($request);
+
+$response->send();

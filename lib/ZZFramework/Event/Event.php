@@ -8,10 +8,18 @@
  * file that was distributed with this source code.
  */
 
-namespace ZZFramework\DependencyInjection;
+namespace ZZFramework\Event;
 
 
-interface ContainerRegisterInterface
+class Event
 {
-    public function registerExtensions(ContainerBuilderInterface $container);
+    private $stopPropagation = false;
+
+    public function stop() {
+        $this->stopPropagation = true;
+    }
+
+    public function isStopped() {
+        return $this->stopPropagation;
+    }
 }

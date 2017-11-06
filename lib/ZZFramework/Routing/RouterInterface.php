@@ -8,10 +8,16 @@
  * file that was distributed with this source code.
  */
 
-namespace ZZFramework\DependencyInjection;
+namespace ZZFramework\Routing;
 
 
-interface ContainerRegisterInterface
+interface RouterInterface
 {
-    public function registerExtensions(ContainerBuilderInterface $container);
+    public function addRoute($id, Route $route);
+
+    public function getUrl($id, $params);
+
+    public function match($match);
+
+    public function getController($id);
 }

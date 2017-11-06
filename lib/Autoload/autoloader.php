@@ -21,7 +21,7 @@ class LibsAutoloader
     private static $loader;
 
     public static function registerClassLoader($class) {
-        if('Autoload/ClassLoader' === $class) {
+        if('Autoload\ClassLoader' === $class) {
             require_once __DIR__.'/ClassLoader.php';
         }
     }
@@ -32,7 +32,7 @@ class LibsAutoloader
         }
 
         spl_autoload_register(array('LibsAutoloader', 'registerClassLoader'), true, true);
-        self::$loader = new \Autoload\ClassLoader();
+        self::$loader = new Autoload\ClassLoader();
         spl_autoload_unregister(array('LibsAutoloader', 'registerClassLoader'));
 
         self::$loader->register();

@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ZZFramework\DependencyInjection;
+namespace ZZFramework\Event;
 
 
-interface ContainerRegisterInterface
+interface EventSubscriberInterface
 {
-    public function registerExtensions(ContainerBuilderInterface $container);
+    public function getObservedEvents();
 }

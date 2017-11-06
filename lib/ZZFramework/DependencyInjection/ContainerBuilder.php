@@ -20,7 +20,7 @@ use ZZFramework\DependencyInjection\Injectable\Reference;
  * @package ZZFramework\DependencyInjection
  * @author Benjamin Roziere <benjamin.roziere@ov-corporation.com>
  */
-class ContainerBuilder extends Container
+class ContainerBuilder extends Container implements ContainerBuilderInterface
 {
     private $registers = array();
     private $definitions = array();
@@ -107,7 +107,7 @@ class ContainerBuilder extends Container
 
     public function build() {
         foreach ($this->registers as $r) {
-            $r->registerExtension($this);
+            $r->registerExtensions($this);
         }
     }
 

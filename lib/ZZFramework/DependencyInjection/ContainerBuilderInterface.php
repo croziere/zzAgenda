@@ -11,7 +11,11 @@
 namespace ZZFramework\DependencyInjection;
 
 
-interface ContainerRegisterInterface
+use ZZFramework\DependencyInjection\Injectable\Definition;
+
+interface ContainerBuilderInterface extends ContainerInterface
 {
-    public function registerExtensions(ContainerBuilderInterface $container);
+    public function build();
+
+    public function register($id, Definition $definition);
 }

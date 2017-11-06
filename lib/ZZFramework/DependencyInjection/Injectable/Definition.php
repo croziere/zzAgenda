@@ -27,7 +27,7 @@ class Definition
      * @param $class
      * @param array $arguments
      */
-    public function __construct($class, array $arguments)
+    public function __construct($class, array $arguments = array())
     {
         $this->class = $class;
         $this->arguments = $arguments;
