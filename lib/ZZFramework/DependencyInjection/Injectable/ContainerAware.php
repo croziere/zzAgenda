@@ -16,6 +16,9 @@ use ZZFramework\DependencyInjection\ContainerInterface;
 
 abstract class ContainerAware implements ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
     public function setContainer(ContainerInterface $container)
