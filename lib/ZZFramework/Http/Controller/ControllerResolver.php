@@ -11,10 +11,12 @@
 namespace ZZFramework\Http\Controller;
 
 
+use ZZFramework\DependencyInjection\ContainerAwareInterface;
 use ZZFramework\Http\Request;
 
 class ControllerResolver implements ControllerResolverInterface
 {
+
 
     public function getController(Request $request)
     {
