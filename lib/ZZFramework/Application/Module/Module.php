@@ -13,6 +13,7 @@ namespace ZZFramework\Application\Module;
 
 use ZZFramework\DependencyInjection\ContainerRegisterInterface;
 use ZZFramework\DependencyInjection\Injectable\ContainerAware;
+use ZZFramework\Routing\Route;
 
 abstract class Module extends ContainerAware implements ModuleInterface
 {
@@ -77,5 +78,16 @@ abstract class Module extends ContainerAware implements ModuleInterface
             $this->path = dirname($r->getFileName());
         }
         return $this->path;
+    }
+
+    /**
+     * @param $id
+     * @param string $path
+     * @param $controller
+     * @param array $attributes
+     * @param array $methods
+     */
+    protected function addRoute($id, string $path, $controller, array $attributes = array(), array $methods = array()) {
+        $this->container->get('router')->addRoute($id, new Route($path, $attributes, $methods, $controller));
     }
 }

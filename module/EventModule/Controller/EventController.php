@@ -9,21 +9,22 @@
 namespace EventModule\Controller;
 
 
-use ZZFramework\DependencyInjection\Injectable\ContainerAware;
+use ZZFramework\Application\Controller\Controller;
 
-class EventController extends ContainerAware
+class EventController extends Controller
 {
-
 
     public function getEventsAction(){
         $database = $this->container->get('database');
         $table = $database->getTable('event');
         $templating = $this->container->get('templating');
-        return new Response($templating->render('oneEvent.html.twig',array(
+
+
+        return $this->render('oneEvent.html.twig', array(
             'eventday' => 8,
             'eventmonth' => 'Juin',
             'eventyear' => 2017,
             'eventlocation' => 'Aubière'
-        )));
+        ));
     }
 }

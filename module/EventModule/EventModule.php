@@ -11,10 +11,10 @@ namespace EventModule;
 
 use ZZFramework\Application\Module\Module;
 use ZZFramework\Routing\Route;
-class UserModule extends Module
+class EventModule extends Module
 {
     public function boot()
     {
-        $this->container->get('router')->addRoute('getEvents', new Route('/event/get', array(), array(), ':Event:Event:getEvents'));
+        $this->addRoute('getEvents', '/events', ':Event:Event:getEvents');
     }
 }

@@ -11,6 +11,7 @@
 namespace ZZFramework\Module\ConfigModule\EventObservers;
 
 
+use ZZFramework\DependencyInjection\ContainerAwareInterface;
 use ZZFramework\DependencyInjection\ContainerInterface;
 use ZZFramework\Event\EventSubscriberInterface;
 use ZZFramework\Http\Event\ControllerResolvedEvent;
@@ -35,7 +36,7 @@ class ControllerInjectorObserver implements EventSubscriberInterface
             return;
         }
 
-        if(get_parent_class($controller[0]) !== 'ZZFramework\DependencyInjection\ContainerAware') {
+        if(!$controller[0] instanceof ContainerAwareInterface) {
             return;
         }
 
