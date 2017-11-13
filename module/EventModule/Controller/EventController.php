@@ -18,6 +18,12 @@ class EventController extends ContainerAware
     public function getEventsAction(){
         $database = $this->container->get('database');
         $table = $database->getTable('event');
-        return new Response('YoloEvent');
+        $templating = $this->container->get('templating');
+        return new Response($templating->render('oneEvent.html.twig',array(
+            'eventday' => 8,
+            'eventmonth' => 'Juin',
+            'eventyear' => 2017,
+            'eventlocation' => 'Aubière'
+        )));
     }
 }
