@@ -97,6 +97,4 @@ class Route
         $this->compile();
         return $this->compiled;
     }
-
-
 }

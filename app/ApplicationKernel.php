@@ -11,7 +11,10 @@
 namespace App;
 
 
+
 use EventModule\EventModule;
+
+
 use ZZFramework\Application\AbstractApplicationKernel;
 
 class ApplicationKernel extends AbstractApplicationKernel
@@ -24,6 +27,7 @@ class ApplicationKernel extends AbstractApplicationKernel
             new \ZZFramework\Module\ExceptionModule\ExceptionModule(),
             new \ZZFramework\Module\TwigModule\TwigModule(),
             new EventModule(),
+            new \JSONFileDB\Module\JSONDalModule\JSONDalModule(),
         );
     }
 }
