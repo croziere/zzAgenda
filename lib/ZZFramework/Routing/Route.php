@@ -81,7 +81,7 @@ class Route
 
     private function compile()
     {
-        if(null === $this->compiled) {
+        if(null !== $this->compiled) {
             return;
         }
 
@@ -97,6 +97,4 @@ class Route
         $this->compile();
         return $this->compiled;
     }
-
-
 }
