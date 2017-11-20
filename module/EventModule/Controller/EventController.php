@@ -20,21 +20,40 @@ class EventController extends Controller
 
         $data_set = $table->select("*");
         $events_array = $data_set->fetch();
-        
+
+        // sort events by date
+        usort($events_array, function ($a, $b) {
+            // using strtotime and substracting date 1 by date 2
+            return strtotime($a->dateTime)-strtotime($b->dateTime);
+        });
+
         return $this->render('allEvents.html.twig', array(
             'event_array' => $events_array,
             'title' => 'Tous les evenements'
         ));
     }
 
-    public function getEventAction(){
-        // TODO : use getEvents , filter only needed event
+    public function getEventAction($eventName){
+        $database = $this->container->get('database');
+        $table = $database->getTable('event');
+
+        $data_set = $table->select("*");
+        $events_array = $data_set->fetch();
+
+        // get only the interesting event (search by name)
+        $theEvent = array_search($eventName,$events_array);
+
+        // transform date to 3 different var ( used in html template)
+        list($day, $month, $year) = explode($theEvent->dateTime);
+
         return $this->render('oneEvent.html.twig', array(
             'title' => 'Voir evenement',
-            'eventday' => 8,
-            'eventmonth' => 'Juin',
-            'eventyear' => 2017,
-            'eventlocation' => 'Aubière'
+            'eventname' => $theEvent->title,
+            'eventdescription' => $theEvent->description,
+            'eventday' => $day,
+            'eventmonth' => $month,
+            'eventyear' => $year,
+            'eventlocation' => $theEvent->location
         ));
     }
 }

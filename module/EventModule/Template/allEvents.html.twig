@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block css %}<link rel="stylesheet" href="css/admin.css">{% endblock %}
+
 {% block title %}
 	{{ title }}
 {% endblock %}
@@ -41,17 +43,4 @@
 	</div>
 </div>
 
-
-
-<!-- footer -->
-<footer class="container-fluid text-center">
-			<p> © 2017 Alexis DELAHAYE | Aucun droit réservé</p>
-			<a href="#" class="fa fa-facebook fa-3x"></a>
-		  <a href="#" class="fa fa-twitter fa-3x"></a>
-		  <a href="#" class="fa fa-google fa-3x"></a>
-		  <a href="mailto:alexis.delahaye@etu.uca.fr" class="fa fa-envelope fa-3x"></a>
-</footer>
-
-</body>
-
-</html>
+{% endblock %}
