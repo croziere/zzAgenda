@@ -2,7 +2,22 @@ language: php
 php:
   - '7.1'
 
+services:
+  - docker
+
 script:
   - php -v
   - composer install
   - phpunit --configuration phpunit.xml
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "develop" ]; then
+    docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    docker push zzagenda/web:latest
+    docker push zzagenda/web:$TRAVIS_COMMIT
+    fi
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+      docker push zzagenda/web:stable
+      docker push zzagenda/web:$TRAVIS_COMMIT
+      fi
