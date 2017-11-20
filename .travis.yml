@@ -4,3 +4,4 @@ php:
 
 script:
   - php -v
+  - phpunit --configuration phpunit.xml
