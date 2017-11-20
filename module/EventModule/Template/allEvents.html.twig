@@ -14,9 +14,9 @@
 		<table class="points_table">
 			<thead>
 				<tr>
-					<th class="col-xs-1">#</th>
-					<th class="col-xs-7">Titre</th>
-					<th class="col-xs-1">Description</th>
+					<th class="col-xs-2">Titre</th>
+					<th class="col-xs-6">Description</th>
+					<th class="col-xs-1">Date</th>
 					<th class="col-xs-1">Speaker</th>
 					<th class="col-xs-1">Lieu</th>
 					<th class="col-xs-1">Supprimer</th>
@@ -26,9 +26,9 @@
 			<tbody class="points_table_scrollbar">
             {% for key,value in event_array %}
 				{%if  loop.index is odd %} <tr class="odd"> {% else   %} <tr class="even"> {% endif %}
-					<td class="col-xs-1">{{ key }}</td>
-					<td class="col-xs-7">{{ value.title }}</td>
-					<td class="col-xs-1">{{ value.description }}</td>
+					<td class="col-xs-2">{{ value.title }}</td>
+					<td class="col-xs-6">{{ value.description }}</td>
+					<td class="col-xs-1">{{ value.dateTime }}</td>
 					<td class="col-xs-1">{{ value.speaker }}</td>
 					<td class="col-xs-1">{{ value.location }}</td>
 					<td class="col-xs-1">
