@@ -16,8 +16,8 @@ class EventModule extends Module
     public function boot()
     {
         $this->addRoute('getEvents', '/events', ':Event:Event:getEvents');
-        $this->addRoute('getEvent', '/event/:eventName', ':Event:Event:getEvent',array(
-            'eventName' => '[a-zA-Z]+'
+        $this->addRoute('getEvent', '/event/:eventName', ':Event:Event:getEvent', array(
+            'eventName' => 'a-zA-Z0-9'
         ));
     }
 }

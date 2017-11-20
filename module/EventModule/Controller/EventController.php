@@ -24,7 +24,7 @@ class EventController extends Controller
         // sort events by date
         usort($events_array, function ($a, $b) {
             // using strtotime and substracting date 1 by date 2
-            return strtotime($a->dateTime)-strtotime($b->dateTime);
+            return strtotime($a['dateTime'])-strtotime($b['dateTime']);
         });
 
         return $this->render('allEvents.html.twig', array(
@@ -41,10 +41,18 @@ class EventController extends Controller
         $events_array = $data_set->fetch();
 
         // get only the interesting event (search by name)
-        $theEvent = array_search($eventName,$events_array);
+        $foundEvents = array_filter($events_array, function($el) use ($eventName) {
+            return $el['title'] === $eventName;
+        });
+
+        if (!count($foundEvents)) {
+            throw new \Exception(sprintf("Event %s not found!", $eventName));
+        }
+
+        $theEvent = (object) $foundEvents[0];
 
         // transform date to 3 different var ( used in html template)
-        list($day, $month, $year) = explode($theEvent->dateTime);
+        list($day, $month, $year) = explode('/', $theEvent->dateTime);
 
         return $this->render('oneEvent.html.twig', array(
             'title' => 'Voir evenement',
