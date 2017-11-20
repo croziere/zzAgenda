@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+	<div class="row">
+		<h2>Liste de tous les events</h2>
+		
+		<table class="points_table">
+			<thead>
+				<tr>
+					<th class="col-xs-1">#</th>
+					<th class="col-xs-7">Titre</th>
+					<th class="col-xs-1">Description</th>
+					<th class="col-xs-1">Speaker</th>
+					<th class="col-xs-1">Lieu</th>
+					<th class="col-xs-1">Supprimer</th>
+				</tr>
+			</thead>
+
+			<tbody class="points_table_scrollbar">
+            {% for key,value in event_array %}
+				Key : {{ key }}
+				Value : {{ value }}
+				{%if  loop.index is odd %} <tr class="odd"> {% else   %} <tr class="even"> {% endif %}
+					<td class="col-xs-1">{{ key }}</td>
+					<td class="col-xs-7">{{ value.title }}</td>
+					<td class="col-xs-1">{{ value.description }}</td>
+					<td class="col-xs-1">{{ value.speaker }}</td>
+					<td class="col-xs-1">{{ value.location }}</td>
+					<td class="col-xs-1">
+						<a class="btn icon-btn btn-danger" href="#"><span class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger"></span> Delete</a>
+					</td>
+				</tr>
+            {% endfor %}
+		</tbody>
+		</table>
+	</div>
+</div>
+
+
+
+<!-- footer -->
+<footer class="container-fluid text-center">
+			<p> © 2017 Alexis DELAHAYE | Aucun droit réservé</p>
+			<a href="#" class="fa fa-facebook fa-3x"></a>
+		  <a href="#" class="fa fa-twitter fa-3x"></a>
+		  <a href="#" class="fa fa-google fa-3x"></a>
+		  <a href="mailto:alexis.delahaye@etu.uca.fr" class="fa fa-envelope fa-3x"></a>
+</footer>
+
+</body>
+
+</html>
