@@ -18,6 +18,6 @@ class UserModule extends Module
 {
     public function boot()
     {
-        $this->container->get('router')->addRoute('homepage', new Route('/', array(), array(), ':User:Test:index'));
+        $this->addRoute('login', '/login', ':User:Security:login');
     }
 }

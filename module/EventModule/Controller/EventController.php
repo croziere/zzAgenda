@@ -15,6 +15,8 @@ class EventController extends Controller
 {
 
     public function getEventsAction(){
+        // TODO : $this->>getUser() verify is authenticated => continue
+
         $database = $this->container->get('database');
         $table = $database->getTable('event');
 
