@@ -14,11 +14,13 @@ script:
 after_success:
   - if [ "$TRAVIS_BRANCH" == "develop" ]; then
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    docker build -t zzagenda/web:latest zzagenda/web:$TRAVIS_COMMIT .
     docker push zzagenda/web:latest
     docker push zzagenda/web:$TRAVIS_COMMIT
     fi
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
       docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+      docker build -t zzagenda/web:stable zzagenda/web:$TRAVIS_COMMIT .
       docker push zzagenda/web:stable
       docker push zzagenda/web:$TRAVIS_COMMIT
       fi
