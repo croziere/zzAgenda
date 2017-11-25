@@ -13,6 +13,7 @@ namespace ZZFramework\Application\Controller;
 
 use ZZFramework\DependencyInjection\Injectable\ContainerAware;
 use ZZFramework\Http\Response;
+use ZZFramework\Security\User\UserInterface;
 
 abstract class Controller extends ContainerAware
 {
@@ -46,5 +47,19 @@ abstract class Controller extends ContainerAware
      */
     protected function render($template, array $data = array()) {
         return new Response($this->getContainer()->get('templating')->render($template, $data));
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isAuthenticated() {
+        return $this->get('security')->getToken()->isAuthenticated();
+    }
+
+    /**
+     * @return UserInterface
+     */
+    protected function getUser() {
+        return $this->get('security')->getUser();
     }
 }

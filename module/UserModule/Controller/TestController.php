@@ -11,10 +11,10 @@
 namespace UserModule\Controller;
 
 
-use ZZFramework\DependencyInjection\Injectable\ContainerAware;
+use ZZFramework\Application\Controller\Controller;
 use ZZFramework\Http\Response;
 
-class TestController extends ContainerAware
+class TestController extends Controller
 {
     public function indexAction() {
 
