@@ -22,4 +22,10 @@ interface RepositoryInterface
     public function findOneBy(array $criteria);
 
     public function getClassName();
+
+    public function hydrateCollection(array $collection);
+
+    public function hydrate($entity);
+
+    public function getEntityName();
 }

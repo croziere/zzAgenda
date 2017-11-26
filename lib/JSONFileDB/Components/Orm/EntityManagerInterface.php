@@ -21,4 +21,6 @@ interface EntityManagerInterface
 
     public function flush();
 
+    public function findAll($entity, $criteria);
+
 }

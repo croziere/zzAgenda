@@ -11,11 +11,12 @@
 namespace UserModule\Repository;
 
 
+use JSONFileDB\Components\Repository\Repository;
 use UserModule\Entity\User;
 use ZZFramework\Security\User\UserInterface;
 use ZZFramework\Security\User\UserProviderInterface;
 
-class UserRepository implements UserProviderInterface
+class UserRepository extends Repository implements UserProviderInterface
 {
 
     /**
@@ -37,12 +38,24 @@ class UserRepository implements UserProviderInterface
         return $user;
     }
 
-    /**
-     * @param $class
-     * @return bool
-     */
-    public function supportsClass($class)
+    public function findOneBy(array $criteria)
     {
-        return true;
+        // TODO: Implement findOneBy() method.
+    }
+
+    public function getClassName()
+    {
+        return User::class;
+    }
+
+    public function hydrate($entity)
+    {
+        $user = new User();
+        $user->setUsername($entity["name"]);
+        $user->setPassword($entity["password"]);
+        $user->setSalt($entity["salt"]);
+        $user->setIsAdmin($entity["isAdmin"]);
+
+        return $user;
     }
 }

@@ -13,6 +13,10 @@ namespace JSONFileDB\Components\AccessLayer;
 
 interface Database
 {
+    /**
+     * @param $name
+     * @return Table
+     */
     public function getTable($name);
 
     public function getTables();

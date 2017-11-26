@@ -9,6 +9,7 @@
 namespace EventModule\Controller;
 
 
+use UserModule\Entity\User;
 use ZZFramework\Application\Controller\Controller;
 
 class EventController extends Controller
@@ -16,6 +17,7 @@ class EventController extends Controller
 
     public function getEventsAction(){
         $database = $this->container->get('database');
+
         $table = $database->getTable('event');
 
         $data_set = $table->select("*");

@@ -26,7 +26,7 @@ class EntityManager implements EntityManagerInterface
     public function __construct(Database $database)
     {
         $this->database = $database;
-        $this->transaction = new Transaction($this);
+        $this->transaction = new Transaction($this, $database);
     }
 
 
@@ -48,5 +48,14 @@ class EntityManager implements EntityManagerInterface
     public function flush()
     {
         $this->transaction->commit();
+    }
+
+    public function findAll($entity, $criteria)
+    {
+        $table = $this->database->getTable($entity);
+
+        $data = $table->select('*');
+
+        return $data->fetch();
     }
 }

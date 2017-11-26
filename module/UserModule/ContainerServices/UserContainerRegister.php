@@ -14,15 +14,15 @@ namespace UserModule\ContainerServices;
 use UserModule\Repository\UserRepository;
 use ZZFramework\DependencyInjection\ContainerBuilderInterface;
 use ZZFramework\DependencyInjection\ContainerRegisterInterface;
-use ZZFramework\DependencyInjection\Injectable\Definition;
 
 class UserContainerRegister implements ContainerRegisterInterface
 {
 
     public function registerExtensions(ContainerBuilderInterface $container)
     {
-        $providerDef = new Definition(UserRepository::class);
+        $providerDef = new UserRepository();
 
-        $container->register('user.provider', $providerDef);
+        $container->set('repository.user', $providerDef);
+        $container->set('user.provider', $providerDef);
     }
 }

@@ -11,6 +11,7 @@
 namespace ZZFramework\Application\Controller;
 
 
+use JSONFileDB\Components\Orm\Orm;
 use ZZFramework\DependencyInjection\Injectable\ContainerAware;
 use ZZFramework\Http\Response;
 use ZZFramework\Security\User\UserInterface;
@@ -61,5 +62,12 @@ abstract class Controller extends ContainerAware
      */
     protected function getUser() {
         return $this->get('security')->getUser();
+    }
+
+    /**
+     * @return Orm
+     */
+    protected function getOrm() {
+        return $this->container->get('orm');
     }
 }

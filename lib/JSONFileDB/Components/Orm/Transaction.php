@@ -11,18 +11,23 @@
 namespace JSONFileDB\Components\Orm;
 
 
+use JSONFileDB\Components\AccessLayer\Database;
+
 final class Transaction
 {
     private $em;
+
+    private $database;
 
 
     /**
      * Transaction constructor.
      * @param $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, Database $database)
     {
         $this->em = $em;
+        $this->database = $database;
     }
 
     public function commit() {
