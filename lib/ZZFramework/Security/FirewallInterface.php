@@ -8,16 +8,12 @@
  * file that was distributed with this source code.
  */
 
-namespace JSONFileDB\Components\AccessLayer;
+namespace ZZFramework\Security;
 
 
-interface Database
+use ZZFramework\Http\Event\GetResponseEvent;
+
+interface FirewallInterface
 {
-    /**
-     * @param $name
-     * @return Table
-     */
-    public function getTable($name);
-
-    public function getTables();
+    public function handle(GetResponseEvent $event, $eventName, $router);
 }

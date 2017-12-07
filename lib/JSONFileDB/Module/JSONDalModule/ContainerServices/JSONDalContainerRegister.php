@@ -12,6 +12,9 @@ namespace JSONFileDB\Module\JSONDalModule\ContainerServices;
 
 
 use JSONFileDB\Components\AccessLayer\JSON\JSONDatabase;
+use JSONFileDB\Components\Orm\EntityManager;
+use JSONFileDB\Components\Orm\Orm;
+use ZZFramework\Application\ApplicationKernelInterface;
 use ZZFramework\DependencyInjection\ContainerBuilderInterface;
 use ZZFramework\DependencyInjection\ContainerRegisterInterface;
 
@@ -22,6 +25,12 @@ class JSONDalContainerRegister implements ContainerRegisterInterface
     {
         $databaseInst = new JSONDatabase($container->get('kernel')->getAppRootDir().'/db/', JSONDatabase::READ_WRITE);
 
+        $managerInst = new EntityManager($databaseInst);
+
+        $orm = new Orm($managerInst);
+
         $container->set('database', $databaseInst);
+        $container->set('entitymanager', $managerInst);
+        $container->set('orm', $orm);
     }
 }
