@@ -9,6 +9,7 @@
 namespace EventModule\Controller;
 
 
+use UserModule\Entity\User;
 use ZZFramework\Application\Controller\Controller;
 
 class EventController extends Controller
@@ -18,6 +19,7 @@ class EventController extends Controller
         // TODO : $this->>getUser() verify is authenticated => continue
 
         $database = $this->container->get('database');
+
         $table = $database->getTable('event');
 
         $data_set = $table->select("*");

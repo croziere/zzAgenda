@@ -16,12 +16,9 @@ use JSONFileDB\Components\AccessLayer\Table;
 
 class JSONDataSet implements DataSet
 {
-
     private $table;
     private $data;
     private $rawData;
-    private $filt = false;
-    private $uids = array();
 
     /**
      * JSONDataSet constructor.
@@ -81,20 +78,29 @@ class JSONDataSet implements DataSet
     private function execute($queries)
     {
         $this->tweak($this->table->raw());
-        $this->apply($queries);
+        //$this->apply($queries);
     }
 
     private function tweak($rawData) {
         $counter = 0;
         foreach ($rawData as $data) {
-            array_push($this->uids, $counter);
-            $data['_id'] = $counter;
+            //array_push($this->uids, $counter);
+           // $data['_id'] = $counter;
             $this->data[] = $data;
             $counter++;
         }
         $this->rawData = $this->data;
     }
 
+    /**
+     * CRITERIA objVal test value
+     * ORDERBY objVal
+     * **/
+
+    /**
+     * Todo: Create a real query executor
+     * @param $queries
+     */
     private function apply($queries)
     {
         foreach ($queries as $query) {

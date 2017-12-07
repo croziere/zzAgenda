@@ -8,16 +8,10 @@
  * file that was distributed with this source code.
  */
 
-namespace JSONFileDB\Components\AccessLayer;
+namespace ZZFramework\Security\Authentication\Token;
 
 
-interface Database
+class AuthenticatedToken extends Token
 {
-    /**
-     * @param $name
-     * @return Table
-     */
-    public function getTable($name);
 
-    public function getTables();
 }

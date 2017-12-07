@@ -8,16 +8,16 @@
  * file that was distributed with this source code.
  */
 
-namespace JSONFileDB\Components\AccessLayer;
+namespace ZZFramework\Security\User;
 
 
-interface Database
+interface UserInterface
 {
-    /**
-     * @param $name
-     * @return Table
-     */
-    public function getTable($name);
+    public function getUsername();
 
-    public function getTables();
+    public function getPassword();
+
+    public function getSalt();
+
+    public function getRoles();
 }

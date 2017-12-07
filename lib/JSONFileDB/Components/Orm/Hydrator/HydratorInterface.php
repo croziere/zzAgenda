@@ -8,16 +8,12 @@
  * file that was distributed with this source code.
  */
 
-namespace JSONFileDB\Components\AccessLayer;
+namespace JSONFileDB\Components\Orm\Hydrator;
 
 
-interface Database
+interface HydratorInterface
 {
-    /**
-     * @param $name
-     * @return Table
-     */
-    public function getTable($name);
+    public function hydrateOne($row);
 
-    public function getTables();
+    public function hydrateCollection($collection);
 }

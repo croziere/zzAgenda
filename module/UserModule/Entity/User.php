@@ -1,42 +1,55 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aldelahaye1
- * Date: 20/11/17
- * Time: 17:51
+/*
+ * This file is part of the zzAgenda package.
+ *
+ * (c) OV Corporation SAS <contact@ov-corporation.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-namespace EventModule\User;
+namespace UserModule\Entity;
 
-class User
+
+use ZZFramework\Security\User\UserInterface;
+
+class User implements UserInterface
 {
+    private $id;
+
     private $username;
+
+    private $email;
+
     private $password;
+
     private $salt;
-    private $roles;
 
-    /**
-     * User constructor.
-     * @param $username
-     * @param $password
-     * @param $salt
-     * @param $roles
-     */
-    public function __construct($username, $password, $salt, $roles)
-    {
-        $this->username = $username;
-        $this->password = $password;
-        $this->salt = $salt;
-        $this->roles = $roles;
-    }
+    private $isAdmin;
 
-
-    /**
-     * @return mixed
-     */
     public function getUsername()
     {
         return $this->username;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    public function getRoles()
+    {
+        if ($this->isAdmin) {
+            return array("ROLE_USER", "ROLE_ADMIN");
+        }
+        else {
+            return array("ROLE_USER");
+        }
     }
 
     /**
@@ -48,27 +61,11 @@ class User
     }
 
     /**
-     * @return mixed
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
      * @param mixed $password
      */
     public function setPassword($password)
     {
         $this->password = $password;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSalt()
-    {
-        return $this->salt;
     }
 
     /**
@@ -80,23 +77,11 @@ class User
     }
 
     /**
-     * @return array string
-     *
+     * @param mixed $isAdmin
      */
-    public function getRoles()
+    public function setIsAdmin($isAdmin)
     {
-        return $this->roles;
+        $this->isAdmin = $isAdmin;
     }
-
-    /**
-     * @param mixed $roles
-     *
-     */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-    }
-
-
 
 }
