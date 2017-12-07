@@ -13,7 +13,9 @@ namespace ZZFramework\Application\Controller;
 
 use JSONFileDB\Components\Orm\Orm;
 use ZZFramework\DependencyInjection\Injectable\ContainerAware;
+use ZZFramework\Http\RedirectResponse;
 use ZZFramework\Http\Response;
+use ZZFramework\Security\Exception\AccessDeniedException;
 use ZZFramework\Security\User\UserInterface;
 
 abstract class Controller extends ContainerAware
@@ -69,5 +71,15 @@ abstract class Controller extends ContainerAware
      */
     protected function getOrm() {
         return $this->container->get('orm');
+    }
+
+    protected function redirect($url, $status = 302) {
+        return new RedirectResponse($url, $status);
+    }
+
+    protected function denyUnauthenticatedAccess() {
+        if (!$this->isAuthenticated()) {
+            throw new AccessDeniedException();
+        }
     }
 }

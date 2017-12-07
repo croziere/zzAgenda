@@ -32,6 +32,11 @@ class FormAuthenticationHandler implements AuthenticationHandlerInterface
     }
 
 
+    /**
+     * @param Request $request
+     * @return AuthenticatedToken
+     * @throws \Exception
+     */
     public function authenticate(Request $request)
     {
         if (!$request->request->has('_username') || !$request->request->has('_password')) {
@@ -46,9 +51,9 @@ class FormAuthenticationHandler implements AuthenticationHandlerInterface
             throw new \Exception("User not found");
         }
 
-        $hash = password_hash($rawPassword, PASSWORD_BCRYPT);
-        if ($user->getPassword() !== $hash) {
-            throw new \Exception("Erreur de connection");
+
+        if (!password_verify($rawPassword, $user->getPassword())) {
+            throw new \Exception("Erreur de connexion");
         }
 
         $token = new AuthenticatedToken();

@@ -13,10 +13,18 @@ namespace ZZFramework\Security;
 
 use ZZFramework\Event\EventSubscriberInterface;
 use ZZFramework\Http\Event\GetResponseEvent;
+use ZZFramework\Http\Event\GetResponseForExceptionEvent;
 use ZZFramework\Http\Event\HttpEvents;
+use ZZFramework\Http\RedirectResponse;
+use ZZFramework\Http\Response;
+use ZZFramework\Security\Authentication\Token\Token;
+use ZZFramework\Security\Exception\AccessDeniedException;
 
 class Firewall implements FirewallInterface, EventSubscriberInterface
 {
+    /**
+     * @var Token
+     */
     private $token;
 
     private $authenticators;
@@ -31,7 +39,7 @@ class Firewall implements FirewallInterface, EventSubscriberInterface
     }
 
 
-    public function handle(GetResponseEvent $event, $eventName, $router)
+    public function handle(GetResponseEvent $event, $eventName, $dispatcher)
     {
         $request = $event->getRequest();
         foreach ($this->authenticators as $authenticator) {
@@ -41,6 +49,18 @@ class Firewall implements FirewallInterface, EventSubscriberInterface
                 break;
             }
         }
+    }
+
+    public function authenticateException(GetResponseForExceptionEvent $event, $eventName, $dispatcher) {
+        if (!$event->getException() instanceof AccessDeniedException) {
+            return;
+        }
+
+        if ($this->token && $this->token->isAuthenticated()) {
+            $event->setResponse(new Response("Access Denied!", Response::HTTP_FORBIDDEN));
+        }
+
+        $event->setResponse(new RedirectResponse('/login'));
     }
 
     /**
@@ -70,6 +90,9 @@ class Firewall implements FirewallInterface, EventSubscriberInterface
 
     public function getObservedEvents()
     {
-        return array(HttpEvents::REQUEST => "handle");
+        return array(
+            HttpEvents::REQUEST => "handle",
+            HttpEvents::EXCEPTION => "authenticateException"
+        );
     }
 }

@@ -10,14 +10,20 @@ namespace UserModule\Controller;
 
 
 use ZZFramework\Application\Controller\Controller;
+use ZZFramework\Http\RedirectResponse;
 
 class SecurityController extends Controller
 {
     public function loginAction(){
-        // TODO : $this->>getUser() verify is authenticated => refuse login
+
+        if ($this->isAuthenticated()) {
+            return new RedirectResponse('/');
+        }
+
+        $lastUsername = '';
 
         return $this->render('login.html.twig', array(
-            'username' => $trucRetourneParFirewall,
+            'username' => $lastUsername,
             'title' => 'Login'
         ));
     }
