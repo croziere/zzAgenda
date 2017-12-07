@@ -15,8 +15,11 @@ use ZZFramework\Security\User\UserInterface;
 
 class User implements UserInterface
 {
+    private $id;
 
     private $username;
+
+    private $email;
 
     private $password;
 

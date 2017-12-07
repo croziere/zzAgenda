@@ -11,6 +11,7 @@
 namespace UserModule\Controller;
 
 
+use UserModule\Entity\User;
 use ZZFramework\Application\Controller\Controller;
 use ZZFramework\Http\Response;
 
@@ -18,10 +19,9 @@ class TestController extends Controller
 {
     public function indexAction() {
 
-        $database = $this->container->get('database');
-
-        $table = $database->getTable('user');
-
+        $data = $this->getOrm()->getRepository(User::class)->findAll();
+        var_dump($data);
+        die;
         return new Response('Yolo');
     }
 }

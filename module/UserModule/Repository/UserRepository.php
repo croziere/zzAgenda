@@ -47,15 +47,4 @@ class UserRepository extends Repository implements UserProviderInterface
     {
         return User::class;
     }
-
-    public function hydrate($entity)
-    {
-        $user = new User();
-        $user->setUsername($entity["name"]);
-        $user->setPassword($entity["password"]);
-        $user->setSalt($entity["salt"]);
-        $user->setIsAdmin($entity["isAdmin"]);
-
-        return $user;
-    }
 }

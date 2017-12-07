@@ -12,6 +12,7 @@ namespace JSONFileDB\Components\Repository;
 
 
 use JSONFileDB\Components\Orm\EntityManagerInterface;
+use JSONFileDB\Components\Orm\Hydrator\ReflectionHydrator;
 
 abstract class Repository implements RepositoryInterface
 {
@@ -22,12 +23,15 @@ abstract class Repository implements RepositoryInterface
 
     private $name;
 
+    private $hydrator;
+
     /**
      * Repository constructor.
      */
     public function __construct()
     {
         $this->name = end(explode('\\', $this->getClassName()));
+        $this->hydrator = new ReflectionHydrator($this->getClassName());
     }
 
 
@@ -51,12 +55,7 @@ abstract class Repository implements RepositoryInterface
 
     public function hydrateCollection(array $collection)
     {
-        $resultSet = array();
-        foreach ($collection as $entity) {
-            $resultSet[] = $this->hydrate($entity);
-        }
-
-        return $resultSet;
+        return $this->hydrator->hydrateCollection($collection);
     }
 
     public function findBy(array $criteria)
@@ -74,6 +73,11 @@ abstract class Repository implements RepositoryInterface
     public function getEntityName()
     {
         return $this->name;
+    }
+
+    public function hydrate($entity)
+    {
+        return $this->hydrator->hydrateOne($entity);
     }
 
 
