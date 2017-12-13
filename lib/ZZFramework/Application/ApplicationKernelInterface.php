@@ -10,6 +10,8 @@
 
 namespace ZZFramework\Application;
 
+use ZZFramework\Application\Module\ModuleInterface;
+
 
 /**
  * Interface ApplicationKernelInterface

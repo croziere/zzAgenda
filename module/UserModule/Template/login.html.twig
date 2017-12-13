@@ -10,16 +10,16 @@
 
  <div class="modal-dialog">
 				<div class="loginmodal-container">
-					<h1>Login</h1><br>
+					<h1>{{ trans('login.title') }}</h1><br>
 				  <form action="/login" method="post">
 					  {% if error %}
 						  <p>{{ error.message }}</p>
 					  {% endif %}
 					<input type="text" name="_username" placeholder="Username" value="{{ username }}">
 					<input type="password" name="_password" placeholder="Password" value="{{ password }}">
-					<input type="submit" name="login" class="login loginmodal-submit" value="Login">
+					<input type="submit" name="login" class="login loginmodal-submit" value="{{ trans('login.sign') }}">
 				  </form>
-					
+
 				  <div class="login-help">
 					<a href="mailto:registerZZ@genda.fr">Demandez un compte gratuit par mail</a> - <a href="#">Mot de passe oublié ? Tanpis</a>
 				  </div>
