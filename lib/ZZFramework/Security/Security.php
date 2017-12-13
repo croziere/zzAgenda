@@ -21,15 +21,18 @@ use ZZFramework\Security\Authentication\Token\Token;
  */
 final class Security
 {
-    private $container;
+    /**
+     * @var Firewall
+     */
+    private $firewall;
 
     /**
      * Security constructor.
-     * @param $container
+     * @param Firewall $firewall
      */
-    public function __construct($container)
+    public function __construct(Firewall $firewall)
     {
-        $this->container = $container;
+        $this->firewall = $firewall;
     }
 
     public function getUser() {
@@ -54,7 +57,42 @@ final class Security
      */
     public function getToken()
     {
-        return $this->container->get('firewall')->getToken();
+        return $this->firewall->getToken();
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getLastAuthenticationError() {
+        $request = $this->firewall->getRequest();
+        $session = $request->session;
+
+        $authenticationException = null;
+
+        if ($session->has('_security_exception')) {
+            $authenticationException = $session->get('_security_exception');
+            unset($_SESSION['_security_exception']);
+        }
+
+        return $authenticationException;
+    }
+
+    /**
+     * Returns the last used username
+     * @return string
+     */
+    public function getLastUsername() {
+        $request = $this->firewall->getRequest();
+        $session = $request->session;
+
+        $username = '';
+
+        if ($session->has('_security_last_username')) {
+            $username = $session->get('_security_last_username');
+            unset($_SESSION['_security_last_username']);
+        }
+
+        return $username;
     }
 
 

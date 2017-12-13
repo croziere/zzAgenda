@@ -16,18 +16,25 @@ use ZZFramework\Http\Event\GetResponseEvent;
 use ZZFramework\Http\Event\GetResponseForExceptionEvent;
 use ZZFramework\Http\Event\HttpEvents;
 use ZZFramework\Http\RedirectResponse;
+use ZZFramework\Http\Request;
 use ZZFramework\Http\Response;
+use ZZFramework\Security\Authentication\Token\AnonymousToken;
 use ZZFramework\Security\Authentication\Token\Token;
 use ZZFramework\Security\Exception\AccessDeniedException;
+use ZZFramework\Security\Exception\AuthenticationException;
 
 class Firewall implements FirewallInterface, EventSubscriberInterface
 {
+    const LOGOUT_URL = '/logout';
+
     /**
      * @var Token
      */
     private $token;
 
     private $authenticators;
+
+    private $request;
 
     /**
      * Firewall constructor.
@@ -42,17 +49,26 @@ class Firewall implements FirewallInterface, EventSubscriberInterface
     public function handle(GetResponseEvent $event, $eventName, $dispatcher)
     {
         $request = $event->getRequest();
-        foreach ($this->authenticators as $authenticator) {
-            $token = $authenticator->authenticate($request);
-            if($token) {
-                $this->setToken($token);
-                break;
+
+        if ($request->getPath() !== Firewall::LOGOUT_URL) {
+            foreach ($this->authenticators as $authenticator) {
+                $token = $authenticator->authenticate($request);
+                if($token) {
+                    $this->setToken($token);
+                    break;
+                }
             }
+        } else {
+            unset($_SESSION["_username"]);
+            $event->setResponse(new RedirectResponse('/'));
         }
+
+        $this->request = $request;
     }
 
+
     public function authenticateException(GetResponseForExceptionEvent $event, $eventName, $dispatcher) {
-        if (!$event->getException() instanceof AccessDeniedException) {
+        if (!$event->getException() instanceof AuthenticationException) {
             return;
         }
 
@@ -77,6 +93,14 @@ class Firewall implements FirewallInterface, EventSubscriberInterface
     public function setToken($token)
     {
         $this->token = $token;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
     }
 
     /**

@@ -34,7 +34,7 @@ class CoreEvent extends Event
 
 
     /**
-     * @return mixed
+     * @return Request
      */
     public function getRequest()
     {

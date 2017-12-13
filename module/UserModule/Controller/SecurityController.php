@@ -20,10 +20,14 @@ class SecurityController extends Controller
             return new RedirectResponse('/');
         }
 
-        $lastUsername = '';
+        $security = $this->get('security');
+
+        $lastUsername = $security->getLastUsername();
+        $error = $security->getLastAuthenticationError();
 
         return $this->render('login.html.twig', array(
             'username' => $lastUsername,
+            'error' => $error,
             'title' => 'Login'
         ));
     }

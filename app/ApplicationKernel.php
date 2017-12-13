@@ -24,10 +24,10 @@ class ApplicationKernel extends AbstractApplicationKernel
     public function registerModules()
     {
         $bundles = array(
+            new \ZZFramework\Module\SecurityModule\SecurityModule(),
             new \ZZFramework\Module\ConfigModule\ConfigModule(),
             new \ZZFramework\Module\ExceptionModule\ExceptionModule(),
             new \ZZFramework\Module\TwigModule\TwigModule(),
-            new \ZZFramework\Module\SecurityModule\SecurityModule(),
             new EventModule(),
             new UserModule(),
             new \JSONFileDB\Module\JSONDalModule\JSONDalModule(),
