@@ -36,7 +36,7 @@ class SecurityContainerRegister implements ContainerRegisterInterface
 
         $firewall = new Firewall(array());
 
-        $security = new Security($container);
+        $security = new Security($firewall);
 
         $container->register('security.handler.form', $formAuthHandlerDef);
         $container->register('security.handler.session', $sessionAuthHandlerDef);

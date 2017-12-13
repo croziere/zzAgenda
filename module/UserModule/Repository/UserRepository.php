@@ -27,7 +27,7 @@ class UserRepository extends Repository implements UserProviderInterface
     {
         $user = new User();
         $user->setUsername("Francis");
-        $user->setPassword("test");
+        $user->setPassword('$2y$10$3WhmLVook4ITnS8FKh7qZ.soKEbQ620nFAQxECBHQCO5WV073UaJ6');
         $user->setIsAdmin(false);
         $user->setSalt("truc");
         return $user;

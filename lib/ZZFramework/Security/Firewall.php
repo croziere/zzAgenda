@@ -13,13 +13,28 @@ namespace ZZFramework\Security;
 
 use ZZFramework\Event\EventSubscriberInterface;
 use ZZFramework\Http\Event\GetResponseEvent;
+use ZZFramework\Http\Event\GetResponseForExceptionEvent;
 use ZZFramework\Http\Event\HttpEvents;
+use ZZFramework\Http\RedirectResponse;
+use ZZFramework\Http\Request;
+use ZZFramework\Http\Response;
+use ZZFramework\Security\Authentication\Token\AnonymousToken;
+use ZZFramework\Security\Authentication\Token\Token;
+use ZZFramework\Security\Exception\AccessDeniedException;
+use ZZFramework\Security\Exception\AuthenticationException;
 
 class Firewall implements FirewallInterface, EventSubscriberInterface
 {
+    const LOGOUT_URL = '/logout';
+
+    /**
+     * @var Token
+     */
     private $token;
 
     private $authenticators;
+
+    private $request;
 
     /**
      * Firewall constructor.
@@ -31,16 +46,37 @@ class Firewall implements FirewallInterface, EventSubscriberInterface
     }
 
 
-    public function handle(GetResponseEvent $event, $eventName, $router)
+    public function handle(GetResponseEvent $event, $eventName, $dispatcher)
     {
         $request = $event->getRequest();
-        foreach ($this->authenticators as $authenticator) {
-            $token = $authenticator->authenticate($request);
-            if($token) {
-                $this->setToken($token);
-                break;
+
+        if ($request->getPath() !== Firewall::LOGOUT_URL) {
+            foreach ($this->authenticators as $authenticator) {
+                $token = $authenticator->authenticate($request);
+                if($token) {
+                    $this->setToken($token);
+                    break;
+                }
             }
+        } else {
+            unset($_SESSION["_username"]);
+            $event->setResponse(new RedirectResponse('/'));
         }
+
+        $this->request = $request;
+    }
+
+
+    public function authenticateException(GetResponseForExceptionEvent $event, $eventName, $dispatcher) {
+        if (!$event->getException() instanceof AuthenticationException) {
+            return;
+        }
+
+        if ($this->token && $this->token->isAuthenticated()) {
+            $event->setResponse(new Response("Access Denied!", Response::HTTP_FORBIDDEN));
+        }
+
+        $event->setResponse(new RedirectResponse('/login'));
     }
 
     /**
@@ -60,6 +96,14 @@ class Firewall implements FirewallInterface, EventSubscriberInterface
     }
 
     /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
      * @param mixed $authenticators
      */
     public function setAuthenticators(array $authenticators)
@@ -70,6 +114,9 @@ class Firewall implements FirewallInterface, EventSubscriberInterface
 
     public function getObservedEvents()
     {
-        return array(HttpEvents::REQUEST => "handle");
+        return array(
+            HttpEvents::REQUEST => "handle",
+            HttpEvents::EXCEPTION => "authenticateException"
+        );
     }
 }

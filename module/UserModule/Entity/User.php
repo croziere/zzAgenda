@@ -84,5 +84,4 @@ class User implements UserInterface
         $this->isAdmin = $isAdmin;
     }
 
-
 }

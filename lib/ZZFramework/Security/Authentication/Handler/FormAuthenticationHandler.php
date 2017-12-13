@@ -13,6 +13,7 @@ namespace ZZFramework\Security\Authentication\Handler;
 
 use ZZFramework\Http\Request;
 use ZZFramework\Security\Authentication\Token\AuthenticatedToken;
+use ZZFramework\Security\Exception\AuthenticationException;
 use ZZFramework\Security\User\UserProviderInterface;
 
 class FormAuthenticationHandler implements AuthenticationHandlerInterface
@@ -32,6 +33,11 @@ class FormAuthenticationHandler implements AuthenticationHandlerInterface
     }
 
 
+    /**
+     * @param Request $request
+     * @return AuthenticatedToken
+     * @throws \Exception
+     */
     public function authenticate(Request $request)
     {
         if (!$request->request->has('_username') || !$request->request->has('_password')) {
@@ -41,14 +47,20 @@ class FormAuthenticationHandler implements AuthenticationHandlerInterface
         $username = $request->request->get('_username');
         $rawPassword = $request->request->get('_password');
 
+
+
         $user = $this->userProvider->loadUserByUsername($username);
         if(!$user) {
-            throw new \Exception("User not found");
+            $e = new AuthenticationException();
+            $this->setLastUsed($e, $username);
+            throw new $e;
         }
 
-        $hash = password_hash($rawPassword, PASSWORD_BCRYPT);
-        if ($user->getPassword() !== $hash) {
-            throw new \Exception("Erreur de connection");
+
+        if (!password_verify($rawPassword, $user->getPassword())) {
+            $e = new AuthenticationException();
+            $this->setLastUsed($e, $username);
+            throw new $e;
         }
 
         $token = new AuthenticatedToken();
@@ -59,5 +71,10 @@ class FormAuthenticationHandler implements AuthenticationHandlerInterface
         $_SESSION["_username"] = $user->getUsername();
 
         return $token;
+    }
+
+    private function setLastUsed(AuthenticationException $e, $username) {
+        $_SESSION['_security_last_username'] = $username;
+        $_SESSION['_security_exception'] = $e;
     }
 }
