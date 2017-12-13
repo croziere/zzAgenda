@@ -17,42 +17,22 @@ use ZZFramework\Http\Request;
 
 class LanguageListener implements EventSubscriberInterface
 {
-    private $container;
+    private $locale;
 
-    /**
-     * LanguageListener constructor.
-     * @param $container
-     */
-    public function __construct($container)
-    {
-        $this->container = $container;
+    public function getLocale() {
+        return $this->locale;
     }
 
+    public function handleRequest(GetResponseEvent $event, $eventName, $router) {
+        $req = $event->getRequest();
 
-    public function getObservedEvents()
-    {
-        return array(
-          HttpEvents::REQUEST => 'handleRequest'
-        );
-    }
-
-    public function handleRequest(GetResponseEvent $event,$eventName,$router){
-        $req= $event->getRequest();
         if($req->session->has('lang')) {
             $lang = $req->session->get('lang');
-        }
-        else {
+        } else {
             $lang = $this->getUserLang($req);
         }
-        try { // lang might not exist (user has browser lang not supported OR session has invalid lang)
-            $messages_array = require($lang . ".php");
-        }
-        catch(\ErrorException $ex){ // use english (en.php) as default language
-            // TODO : display error while loading above $lang : NOT SUPPORTED LANGUAGE, USING ENGLISH AS DEFAULT
-            $messages_array = require("en.php");
-        }
-        $translator = new Translator($messages_array); // building matching translator
-        $this->container->set('translator',$translator); // injecting translator into container
+
+        $this->locale = $lang ? $lang : 'en';
     }
 
     /**
@@ -60,7 +40,14 @@ class LanguageListener implements EventSubscriberInterface
      * @param request Request containing browser settings
      * @return string
      */
-    private function getUserLang($request){
+    private function getUserLang($request) {
         return substr($request->server->get('HTTP_ACCEPT_LANGUAGE'),0,2);
+    }
+
+    public function getObservedEvents()
+    {
+        return array(
+            HttpEvents::REQUEST => 'handleRequest'
+        );
     }
 }

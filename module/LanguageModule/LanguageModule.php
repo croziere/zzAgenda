@@ -8,14 +8,25 @@
 
 namespace LanguageModule;
 
-class LanguageModule
+use ZZFramework\Application\Module\Module;
+
+class LanguageModule extends Module
 {
     public function boot()
     {
-        // TODO : register twig filter in twig environment variable
-        // register listener
-        $this->addRoute('changeLang', '/changeLang/:lang', ':Language:Language:changeLang', array(
-        'lang' => 'a-z'
-    ));
+        $dispatcher = $this->container->get('event_dispatcher');
+        $localeListener = $this->container->get('locale_listener');
+
+        $dispatcher->subscribeObservers($localeListener);
+
+        $twigExtension = $this->container->get('language.twig.trans');
+        $twigEnv = $this->container->get('templating');
+
+        $twigExtension->registerExtensions($twigEnv);
+
+
+        $this->addRoute('changeLang', '/lang/:lang', ':Language:Language:changeLang', array(
+            'lang' => 'a-z'
+        ));
     }
 }

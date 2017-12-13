@@ -15,6 +15,7 @@ namespace App;
 use EventModule\EventModule;
 
 
+use LanguageModule\LanguageModule;
 use UserModule\UserModule;
 use ZZFramework\Application\AbstractApplicationKernel;
 
@@ -31,6 +32,7 @@ class ApplicationKernel extends AbstractApplicationKernel
             new EventModule(),
             new UserModule(),
             new \JSONFileDB\Module\JSONDalModule\JSONDalModule(),
+            new LanguageModule(),
         );
 
         return $bundles;

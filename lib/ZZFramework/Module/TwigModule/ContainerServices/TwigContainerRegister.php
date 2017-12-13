@@ -22,20 +22,15 @@ class TwigContainerRegister implements ContainerRegisterInterface
 
     public function registerExtensions(ContainerBuilderInterface $container)
     {
-        $loaderDef = new Definition('\Twig_Loader_Filesystem');
-        $loaderDef->addArgument($this->createTemplatingPaths($container->get('kernel')));
+        $loader = new \Twig_Loader_Filesystem($this->createTemplatingPaths($container->get('kernel')));
 
-        $twigDef = new Definition('\Twig_Environment');
-        $twigDef
-            ->addArgument(new Reference('templating.loader'))
-            ->addArgument(array(
-                'cache' => $container->get('kernel')->getCacheDir(),
-                'debug' => $container->get('kernel')->isDebug(),
-            ))
-        ;
+        $twig = new \Twig_Environment($loader, array(
+            'cache' => $container->get('kernel')->getCacheDir(),
+            'debug' => $container->get('kernel')->isDebug(),
+        ));
 
-        $container->register('templating.loader', $loaderDef);
-        $container->register('templating', $twigDef);
+        $container->set('templating.loader', $loader);
+        $container->set('templating', $twig);
     }
 
     private function createTemplatingPaths(ApplicationKernelInterface $kernel) {

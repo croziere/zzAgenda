@@ -14,6 +14,9 @@ class LanguageController extends Controller
 {
     public function changeLangAction($lang)
     {
+        $_SESSION['lang'] = $lang;
+
+        return $this->redirect('/');
     }
 
 }
