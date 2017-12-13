@@ -10,7 +10,6 @@
 
 namespace UserModule;
 
-
 use ZZFramework\Application\Module\Module;
 use ZZFramework\Routing\Route;
 
@@ -18,6 +17,8 @@ class UserModule extends Module
 {
     public function boot()
     {
-        $this->container->get('router')->addRoute('homepage', new Route('/', array(), array(), ':User:Test:index'));
+        $this->addRoute('login', '/login', ':User:Security:login');
+
+        $this->container->get('orm')->addRepository($this->container->get('repository.user'));
     }
 }

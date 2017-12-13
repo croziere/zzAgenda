@@ -9,13 +9,21 @@
 namespace EventModule\Controller;
 
 
+use UserModule\Entity\User;
 use ZZFramework\Application\Controller\Controller;
+use ZZFramework\Http\RedirectResponse;
 
 class EventController extends Controller
 {
 
     public function getEventsAction(){
+
+        if (!$this->isAuthenticated()) {
+            return new RedirectResponse('/login');
+        }
+
         $database = $this->container->get('database');
+
         $table = $database->getTable('event');
 
         $data_set = $table->select("*");

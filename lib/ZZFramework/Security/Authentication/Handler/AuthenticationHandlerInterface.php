@@ -8,16 +8,12 @@
  * file that was distributed with this source code.
  */
 
-namespace JSONFileDB\Components\AccessLayer;
+namespace ZZFramework\Security\Authentication\Handler;
 
 
-interface Database
+use ZZFramework\Http\Request;
+
+interface AuthenticationHandlerInterface
 {
-    /**
-     * @param $name
-     * @return Table
-     */
-    public function getTable($name);
-
-    public function getTables();
+    public function authenticate(Request $request);
 }

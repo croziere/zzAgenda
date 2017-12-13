@@ -39,8 +39,14 @@ abstract class AbstractApplicationKernel implements ApplicationKernelInterface
         $this->rootDir = $this->getAppRootDir();
     }
 
+    /**
+     * @inheritdoc
+     */
     public abstract function registerModules();
 
+    /**
+     * @inheritdoc
+     */
     public function getModules()
     {
         return $this->modules;

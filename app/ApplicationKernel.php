@@ -15,6 +15,7 @@ namespace App;
 use EventModule\EventModule;
 
 
+use UserModule\UserModule;
 use ZZFramework\Application\AbstractApplicationKernel;
 
 class ApplicationKernel extends AbstractApplicationKernel
@@ -22,12 +23,16 @@ class ApplicationKernel extends AbstractApplicationKernel
 
     public function registerModules()
     {
-        return array(
+        $bundles = array(
+            new \ZZFramework\Module\SecurityModule\SecurityModule(),
             new \ZZFramework\Module\ConfigModule\ConfigModule(),
             new \ZZFramework\Module\ExceptionModule\ExceptionModule(),
             new \ZZFramework\Module\TwigModule\TwigModule(),
             new EventModule(),
+            new UserModule(),
             new \JSONFileDB\Module\JSONDalModule\JSONDalModule(),
         );
+
+        return $bundles;
     }
 }
