@@ -16,12 +16,6 @@ use JSONFileDB\Components\Repository\Repository;
 
 class EventRepository extends Repository
 {
-
-    public function findOneBy(array $criteria)
-    {
-        // TODO: Implement findOneBy() method.
-    }
-
     public function getClassName()
     {
         return Event::class;

@@ -38,11 +38,6 @@ class UserRepository extends Repository implements UserProviderInterface
         return $user;
     }
 
-    public function findOneBy(array $criteria)
-    {
-        // TODO: Implement findOneBy() method.
-    }
-
     public function getClassName()
     {
         return User::class;
