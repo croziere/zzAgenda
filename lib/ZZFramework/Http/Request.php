@@ -33,6 +33,9 @@ class Request
 
     private $method;
 
+    const METHOD_GET = 'get';
+    const METHOD_POST = 'post';
+
     public function __construct($uri, $method, $request, $query, $server, $cookies, $files, $session = array()) {
         $this->attributes = new ParametersBag();
 
@@ -44,7 +47,7 @@ class Request
         $this->session = new ParametersBag($session);
 
         $this->uri = $uri;
-        $this->method = $method;
+        $this->method = strtolower($method);
     }
 
     public static function fromContext() {
@@ -61,5 +64,13 @@ class Request
 
     public function getPath() {
         return $this->uri;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMethod()
+    {
+        return $this->method;
     }
 }

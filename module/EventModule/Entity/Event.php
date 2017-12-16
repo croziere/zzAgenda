@@ -49,7 +49,7 @@ class Event
      * @param $dateTime
      * @param $location
      */
-    public function __construct($title, $description, $speaker, $dateTime, $location)
+    public function __construct($title = '', $description = '', $speaker = '', $dateTime = '', $location = '')
     {
         $this->title = $title;
         $this->description = $description;

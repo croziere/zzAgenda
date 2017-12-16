@@ -20,11 +20,17 @@ class EventModule extends Module
 
         $this->addRoute('getEvents', '/', ':Event:Event:getEvents');
 
+        $this->addRoute('event.add', "/event/new", ':Event:Event:addEvent');
+
         $this->addRoute('getEvent', '/event/:id', ':Event:Event:getEvent', array(
-            'id' => '[a-zA-Z0-9-]+'
+            'id' => 'a-zA-Z0-9-'
         ));
 
         $this->addRoute('event.delete', '/event/delete/:id', ':Event:Event:deleteEvent', array(
+            'id' => 'a-zA-Z0-9-',
+        ));
+
+        $this->addRoute('event.edit', '/event/edit/:id', ':Event:Event:editEvent', array(
             'id' => 'a-zA-Z0-9-',
         ));
     }

@@ -11,6 +11,7 @@ namespace EventModule\Controller;
 
 use EventModule\Entity\Event;
 use ZZFramework\Application\Controller\Controller;
+use ZZFramework\Http\Request;
 
 /**
  * Class EventController
@@ -80,16 +81,69 @@ class EventController extends Controller
 
     /**
      * Add a new event
+     * @param Request $request
+     * @return \ZZFramework\Http\Response
      */
-    public function addEventAction() {
+    public function addEventAction(Request $request) {
 
+        if ($request->getMethod() === Request::METHOD_POST) {
+
+            $data = $request->request;
+
+            $event = new Event(
+                $data->get('title'),
+                $data->get('description'),
+                $data->get('speaker'),
+                $data->get('datetime'),
+                $data->get('location')
+            );
+
+            $mgr = $this->getOrm()->getManager();
+
+            $mgr->persist($event);
+
+            $mgr->flush();
+
+            return $this->redirect('/');
+
+        }
+
+        return $this->render('addEvent.html.twig');
     }
 
     /**
      * Edit an existing event
      * @param $id
+     * @return \ZZFramework\Http\Response
      */
-    public function editEventAction($id) {
+    public function editEventAction(Request $request, $id) {
 
+        $event = $this->getOrm()->getRepository(Event::class)->find($id);
+
+        if (!$event) {
+            throw $this->createNotFoundException('Event not found!');
+        }
+
+        if ($request->getMethod() === Request::METHOD_POST) {
+            $data = $request->request;
+
+            $event->setTitle($data->get('title'));
+            $event->setDescription($data->get('description'));
+            $event->setSpeaker($data->get('speaker'));
+            $event->setDateTime($data->get('datetime'));
+            $event->setLocation($data->get('location'));
+
+            $mgr = $this->getOrm()->getManager();
+
+            $mgr->persist($event);
+
+            $mgr->flush();
+
+            return $this->redirect('/');
+        }
+
+        return $this->render('addEvent.html.twig', array(
+            'event' => $event,
+        ));
     }
 }
