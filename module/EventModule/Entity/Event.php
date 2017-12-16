@@ -11,11 +11,34 @@ namespace EventModule\Entity;
 
 class Event
 {
+    /**
+     * @Mapped
+     */
     private $id;
+
+    /**
+     * @Mapped
+     */
     private $title;
+
+    /**
+     * @Mapped
+     */
     private $description;
+
+    /**
+     * @Mapped
+     */
     private $speaker;
+
+    /**
+     * @Mapped
+     */
     private $dateTime;
+
+    /**
+     * @Mapped
+     */
     private $location;
 
     /**

@@ -62,6 +62,7 @@ class JSONDataSet implements DataSet
     {
         if (!key_exists($id, $this->data)) {
             $id = $this->idGenerator->generateNext();
+            $data['_id'] = $id;
         }
 
         $this->data[$id] = $data;

@@ -21,11 +21,11 @@ class EventModule extends Module
         $this->addRoute('getEvents', '/', ':Event:Event:getEvents');
 
         $this->addRoute('getEvent', '/event/:id', ':Event:Event:getEvent', array(
-            'id' => '\d+'
+            'id' => '[a-zA-Z0-9-]+'
         ));
 
         $this->addRoute('event.delete', '/event/delete/:id', ':Event:Event:deleteEvent', array(
-            'id' => '\d+',
+            'id' => 'a-zA-Z0-9-',
         ));
     }
 }
