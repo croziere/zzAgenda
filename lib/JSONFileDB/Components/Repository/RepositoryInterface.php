@@ -17,7 +17,7 @@ interface RepositoryInterface
 
     public function findAll();
 
-    public function findBy(array $criteria);
+    public function findBy(array $criteria, array $orderBy = array());
 
     public function findOneBy(array $criteria);
 

@@ -11,6 +11,7 @@
 namespace JSONFileDB\Components\Query;
 
 
+use JSONFileDB\Components\AccessLayer\DataSet;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 class Query
@@ -21,7 +22,7 @@ class Query
 
     private $executed = false;
 
-    private $rawData;
+    private $dataSet;
 
     private $results;
 
@@ -29,14 +30,16 @@ class Query
 
     /**
      * Query constructor.
+     * @param $dataSet
      * @param array $criterias
      * @param array $orderBy
      */
-    public function __construct(array $criterias = array(), array $orderBy = array(), $data)
+    public function __construct(DataSet $dataSet, array $criterias = array(), array $orderBy = array())
     {
         $this->criterias = $criterias;
         $this->orderBy = $orderBy;
-        $this->rawData = $data;
+        $this->dataSet = $dataSet;
+
         $this->queryEvaluator = new ExpressionLanguage();
     }
 
@@ -45,7 +48,7 @@ class Query
             return;
         }
 
-        $this->results = $this->applyCriterias($this->rawData, $this->criterias);
+        $this->results = $this->applyCriterias($this->dataSet->fetchAll(), $this->criterias);
 
         $this->sort($this->results, $this->orderBy);
 
@@ -77,8 +80,9 @@ class Query
     private function applyCriteria($criteria, $results)
     {
         $results = array_filter($results, function($item) use ($criteria) {
+
             return $this->queryEvaluator->evaluate($criteria, array(
-                'e' => $item
+                'e' => (object)$item
             ));
         });
 

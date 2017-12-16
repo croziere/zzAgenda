@@ -9,67 +9,87 @@
 namespace EventModule\Controller;
 
 
-use UserModule\Entity\User;
+use EventModule\Entity\Event;
 use ZZFramework\Application\Controller\Controller;
-use ZZFramework\Http\RedirectResponse;
 
+/**
+ * Class EventController
+ * Controller of all events related pages
+ * @package EventModule\Controller
+ * @author Alexis Delahaye <alexis.delahaye@etu.uca.fr>
+ */
 class EventController extends Controller
 {
+    /**
+     * List of all events
+     * @return \ZZFramework\Http\Response
+     */
+    public function getEventsAction()
+    {
+        $this->denyUnauthenticatedAccess();
 
-    public function getEventsAction(){
-
-        if (!$this->isAuthenticated()) {
-            return new RedirectResponse('/login');
-        }
-
-        $database = $this->container->get('database');
-
-        $table = $database->getTable('event');
-
-        $data_set = $table->select("*");
-        $events_array = $data_set->fetch();
-
-        // sort events by date
-        usort($events_array, function ($a, $b) {
-            // using strtotime and substracting date 1 by date 2
-            return strtotime($a['dateTime'])-strtotime($b['dateTime']);
-        });
+        $events = $this->getOrm()->getRepository(Event::class)->findBy(array(), array("title" => "ASC"));
 
         return $this->render('allEvents.html.twig', array(
-            'event_array' => $events_array,
-            'title' => 'Tous les evenements'
+            'event_array' => $events,
+            'title' => 'event.title.all',
         ));
     }
 
-    public function getEventAction($eventName){
-        $database = $this->container->get('database');
-        $table = $database->getTable('event');
+    /**
+     * Display one event
+     * @param $id
+     * @return \ZZFramework\Http\Response
+     */
+    public function getEventAction($id)
+    {
+        $repository = $this->getOrm()->getRepository(Event::class);
 
-        $data_set = $table->select("*");
-        $events_array = $data_set->fetch();
+        $event = $repository->find($id);
 
-        // get only the interesting event (search by name)
-        $foundEvents = array_filter($events_array, function($el) use ($eventName) {
-            return $el['title'] === $eventName;
-        });
-
-        if (!count($foundEvents)) {
-            throw new \Exception(sprintf("Event %s not found!", $eventName));
+        if (!$event) {
+            throw $this->createNotFoundException("Event doesn't exists!");
         }
-
-        $theEvent = (object) $foundEvents[0];
-
-        // transform date to 3 different var ( used in html template)
-        list($day, $month, $year) = explode('/', $theEvent->dateTime);
 
         return $this->render('oneEvent.html.twig', array(
             'title' => 'Voir evenement',
-            'eventname' => $theEvent->title,
-            'eventdescription' => $theEvent->description,
-            'eventday' => $day,
-            'eventmonth' => $month,
-            'eventyear' => $year,
-            'eventlocation' => $theEvent->location
+            'event' => $event,
         ));
+    }
+
+    /**
+     * Delete an event
+     * @param $id
+     * @return \ZZFramework\Http\RedirectResponse
+     */
+    public function deleteEventAction($id) {
+        $mgr = $this->getOrm()->getManager();
+
+        $event = $this->getOrm()->getRepository(Event::class)->find($id);
+
+        if (!$event) {
+            throw $this->createNotFoundException("Event doesn't exists!");
+        }
+
+        $mgr->remove($event);
+
+        $mgr->flush();
+
+        return $this->redirect('/');
+    }
+
+    /**
+     * Add a new event
+     */
+    public function addEventAction() {
+
+    }
+
+    /**
+     * Edit an existing event
+     * @param $id
+     */
+    public function editEventAction($id) {
+
     }
 }

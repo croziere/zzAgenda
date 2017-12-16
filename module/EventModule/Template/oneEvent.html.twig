@@ -8,8 +8,8 @@
 <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 well well-sm">
             <legend><a href="http://www.jquery2dotnet.com"><i class="glyphicon glyphicon-globe"></i></a> Evenement</legend>
-            <input class="form-control" name="eventName" placeholder="Nom de l'évènement" value="{{ eventname }}" />
-            <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required" placeholder="Message">{{eventdescription}}</textarea>
+            <input class="form-control" name="eventName" placeholder="Nom de l'évènement" value="{{ event.title }}" />
+            <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required" placeholder="Message">{{ event.description }}</textarea>
             <label for="">
                 Date de l'évènement</label>
             <div class="row">
@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <select class="form-control">
-                        <option value="Tipo">{{ eventlocation }}</option>
+                        <option value="Tipo">{{ event.location }}</option>
                     </select>
                 </div>    
             </div>

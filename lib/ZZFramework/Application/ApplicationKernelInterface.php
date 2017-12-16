@@ -16,7 +16,7 @@ use ZZFramework\Application\Module\ModuleInterface;
 /**
  * Interface ApplicationKernelInterface
  * Represents an application
- * made of modules dinamicaly loaded
+ * made of modules dynamically loaded
  * using an DIC
  * @package ZZFramework\Application
  */
@@ -35,6 +35,7 @@ interface ApplicationKernelInterface
     /**
      * Returns a loaded module
      * @param $name
+     * @return ModuleInterface
      */
     public function getModule($name);
 
@@ -58,19 +59,19 @@ interface ApplicationKernelInterface
      * in debug mode
      * @return bool
      */
-    public function isDebug();
+    public function isDebug(): bool;
 
     /**
      * Returns the root path of the app
      * @return string
      */
-    public function getAppRootDir();
+    public function getAppRootDir(): string;
 
     /**
      * Returns a writable cache dir
      * @return string
      */
-    public function getCacheDir();
+    public function getCacheDir(): string;
 
     /**
      * Register the DIC configuration

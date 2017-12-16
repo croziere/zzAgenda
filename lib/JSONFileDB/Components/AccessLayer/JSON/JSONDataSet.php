@@ -12,41 +12,30 @@ namespace JSONFileDB\Components\AccessLayer\JSON;
 
 
 use JSONFileDB\Components\AccessLayer\DataSet;
+use JSONFileDB\Components\AccessLayer\Id\UuidGenerator;
 use JSONFileDB\Components\AccessLayer\Table;
+use Ramsey\Uuid\Uuid;
 
 class JSONDataSet implements DataSet
 {
     private $table;
-    private $data;
-    private $rawData;
+
+    private $data = array();
+
+    private $filled = false;
+
+    private $idGenerator;
 
     /**
      * JSONDataSet constructor.
-     * @param $table
+     * @param Table $table
+     * @param null|string $raw
      */
-    public function __construct(Table $table, $query)
+    public function __construct(Table $table, $raw = null)
     {
         $this->table = $table;
-        $this->execute($query);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function fetch($includeId = true)
-    {
-        if ($includeId) {
-            return $this->data;
-        }
-
-        $res = array();
-
-        foreach ($this->data as $data) {
-            unset($data['_id']);
-            array_push($res, $data);
-        }
-
-        return $res;
+        $this->idGenerator = new UuidGenerator();
+        $this->fill($raw);
     }
 
     public function count()
@@ -54,65 +43,53 @@ class JSONDataSet implements DataSet
         return count($this->data);
     }
 
-    public function delete()
+    public function delete($id)
     {
-        foreach ($this->data as $d)
-        {
-            unset($this->table->raw()[$d['_id']]);
+        unset($this->data[$id]);
+    }
+
+    public function fetchOne($id)
+    {
+        return $this->data[$id];
+    }
+
+    public function fetchAll()
+    {
+        return $this->data; //Maybe a copy...?
+    }
+
+    public function set($id, $data)
+    {
+        if (!key_exists($id, $this->data)) {
+            $id = $this->idGenerator->generateNext();
         }
 
-        $this->table->write();
+        $this->data[$id] = $data;
+
+        return $id;
     }
 
-    public function update()
+    public function fill($raw)
     {
-        // TODO: Implement update() method.
-    }
-
-    public function sort($sortFn = null)
-    {
-        $this->data = usort($this->data, $sortFn);
-        return $this;
-    }
-
-    private function execute($queries)
-    {
-        $this->tweak($this->table->raw());
-        //$this->apply($queries);
-    }
-
-    private function tweak($rawData) {
-        $counter = 0;
-        foreach ($rawData as $data) {
-            //array_push($this->uids, $counter);
-           // $data['_id'] = $counter;
-            $this->data[] = $data;
-            $counter++;
+        if ($this->filled) {
+            throw new \LogicException("DataSet already filled!");
         }
-        $this->rawData = $this->data;
+
+        $rawArray = json_decode($raw, true);
+
+        foreach ($rawArray as $e) {
+            if (!$e['_id']) {
+                throw new \RuntimeException(sprintf("Data format error: Missing _id entry in json!"));
+            }
+
+            $this->data[$e['_id']] = $e;
+        }
+
+        $this->filled = true;
     }
 
-    /**
-     * CRITERIA objVal test value
-     * ORDERBY objVal
-     * **/
-
-    /**
-     * Todo: Create a real query executor
-     * @param $queries
-     */
-    private function apply($queries)
+    public function write()
     {
-        foreach ($queries as $query) {
-            if (count($query) < 3) continue;
-
-            $key = (!empty($query[0])) ? $query[0] : '';
-            $con = (!empty($query[3])) ? $query[3] : 'or';
-
-            if($key == '*') return;
-
-            if($con == 'or') $this->check($this->rawd, $query);
-            else $this->check($this->data, $query);
-        }
+        return json_encode(array_values($this->data));
     }
 }

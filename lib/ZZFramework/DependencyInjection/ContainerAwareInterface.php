@@ -17,5 +17,9 @@ namespace ZZFramework\DependencyInjection;
  */
 interface ContainerAwareInterface
 {
+    /**
+     * Set the container to the class
+     * @param ContainerInterface $container
+     */
     public function setContainer(ContainerInterface $container);
 }

@@ -25,7 +25,7 @@ use ZZFramework\Security\Exception\AuthenticationException;
 
 class Firewall implements FirewallInterface, EventSubscriberInterface
 {
-    const LOGOUT_URL = '/logout';
+    const LOGOUT_URL = '/logout'; //Booo hardcoded config string
 
     /**
      * @var Token

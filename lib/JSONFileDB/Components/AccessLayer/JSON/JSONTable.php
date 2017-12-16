@@ -23,7 +23,7 @@ class JSONTable implements Table
     private $db;
 
     /**
-     * @internal
+     * @var DataSet
      */
     private $data = null;
 
@@ -34,10 +34,10 @@ class JSONTable implements Table
      */
     public function __construct($name, JSONDatabase $db)
     {
-        $this->name = $name;
+        $this->name = strtolower($name);
         $this->db = $db;
 
-        $this->path = $this->generatePath($db->getDirectory(), $name, $db->getFileExtension());
+        $this->path = $this->generatePath($db->getDirectory(), $this->name, $db->getFileExtension());
 
         if (file_exists($this->path)) {
             $this->load();
@@ -47,6 +47,7 @@ class JSONTable implements Table
 
     /**
      * Create the table
+     * @throws AccessLayerException
      */
     public function create()
     {
@@ -54,7 +55,7 @@ class JSONTable implements Table
             throw new AccessLayerException(sprintf("Table %s already exists! (In %s)", $this->name, $this->path));
         }
 
-        $this->data = array();
+        $this->data = new JSONDataSet($this, '[]');
         $this->write();
     }
 
@@ -65,11 +66,14 @@ class JSONTable implements Table
     {
         if ($this->fileExists) {
             unlink($this->path);
+            $this->data = null;
+            $this->fileExists = false;
         }
     }
 
     /**
      * Truncate the table
+     * @throws AccessLayerException
      */
     public function truncate()
     {
@@ -77,17 +81,7 @@ class JSONTable implements Table
             throw new AccessLayerException(sprintf("Tried to truncate table %s but file %s does not exists!", $this->name, $this->path));
         }
 
-        $this->data = array();
-        $this->write();
-    }
-
-    /**
-     * Insert an array to the table
-     * @param array $data
-     */
-    public function insert(array $data)
-    {
-        $this->data[] = $data;
+        $this->data = new JSONDataSet($this, '[]');
         $this->write();
     }
 
@@ -102,21 +96,27 @@ class JSONTable implements Table
             throw new AccessLayerException(sprintf("Table file %s not found!", $this->path));
         }
 
-        $newPath = $this->generatePath($this->db->getDirectory(), $newName, $this->db->getFileExtension());
+        $newName = strtolower($newName);
 
-        file_put_contents($newPath, json_encode($this->data));
-        unlink($this->path);
+        $oldPath = $this->path;
+        $this->path = $this->generatePath($this->db->getDirectory(), $newName, $this->db->getFileExtension());
 
-        $this->path = $newPath;
+        $this->write();
+        unlink($oldPath);
     }
 
     /**
      * Select data from the table
      * @return DataSet
+     * @throws AccessLayerException
      */
     public function select(): DataSet
     {
-        return new JSONDataSet($this, func_get_args());
+        if (!$this->fileExists) {
+            throw new AccessLayerException(sprintf("Table file %s does not exists!", $this->path));
+        }
+
+        return $this->data;
     }
 
     /**
@@ -130,7 +130,7 @@ class JSONTable implements Table
             throw new AccessLayerException(sprintf("Table file %s does not exists!", $this->path));
         }
 
-        return count($this->data);
+        return $this->data->count();
     }
 
     /**
@@ -143,21 +143,17 @@ class JSONTable implements Table
     }
 
     /**
-     * Return the raw table data
-     * @return array
-     */
-    public function raw(): array
-    {
-        return $this->data;
-    }
-
-    /**
      * Write the data to the table
      * @internal
+     * @throws AccessLayerException
      */
     public function write()
     {
-        file_put_contents($this->path, json_encode($this->data));
+        if (!$this->fileExists) {
+            throw new AccessLayerException(sprintf("Table file %s does not exists!", $this->path));
+        }
+
+        file_put_contents($this->path, $this->data->write());
     }
 
     /**
@@ -165,7 +161,7 @@ class JSONTable implements Table
      */
     protected function load()
     {
-        $this->data = json_decode(file_get_contents($this->path), true);
+        $this->data = new JSONDataSet($this, file_get_contents($this->path));
         $this->fileExists = true;
     }
 

@@ -10,16 +10,59 @@
 
 namespace JSONFileDB\Components\AccessLayer;
 
-
+/**
+ * Interface DataSet
+ * Wraps an array of raw data
+ * Hold the state of the table content
+ * Data representation must have a unique id field
+ * @package JSONFileDB\Components\AccessLayer
+ */
 interface DataSet
 {
-    public function fetch($includeId = true);
+    /**
+     * Returns one row of data of id $id or null
+     * @param $id
+     * @return mixed|null
+     */
+    public function fetchOne($id);
 
+    /**
+     * Returns all the rows
+     * @return array
+     */
+    public function fetchAll();
+
+    /**
+     * Count the rows
+     * @return int
+     */
     public function count();
 
-    public function delete();
+    /**
+     * Add or update a row with $data
+     * @param $id
+     * @param $data
+     * @return mixed Last inserted id
+     */
+    public function set($id, $data);
 
-    public function update();
+    /**
+     * Delete a row
+     * @param $id
+     * @return mixed
+     */
+    public function delete($id);
 
-    public function sort($sortFn = null);
+    /**
+     * Fill the DataSet with data
+     * @param $raw
+     * @return mixed
+     */
+    public function fill($raw);
+
+    /**
+     * Returns the raw data to write
+     * @return string
+     */
+    public function write();
 }

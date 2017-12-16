@@ -56,6 +56,7 @@ class Container implements ContainerInterface
     public function get($id)
     {
         $id = strtolower($id);
+
         if('container' === $id) {
             return $this;
         }

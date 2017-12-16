@@ -30,7 +30,8 @@ abstract class Repository implements RepositoryInterface
      */
     public function __construct()
     {
-        $this->name = end(explode('\\', $this->getClassName()));
+        $nsPart = explode('\\', $this->getClassName());
+        $this->name = end($nsPart);
         $this->hydrator = new ReflectionHydrator($this->getClassName());
     }
 
@@ -41,7 +42,9 @@ abstract class Repository implements RepositoryInterface
 
     public function find($id)
     {
-        $this->manager->find($this->getClassName(), $id);
+        $raw = $this->manager->find($this->getClassName(), $id);
+
+        return $this->hydrate($raw);
     }
 
     /**
@@ -58,9 +61,9 @@ abstract class Repository implements RepositoryInterface
         return $this->hydrator->hydrateCollection($collection);
     }
 
-    public function findBy(array $criteria)
+    public function findBy(array $criteria, array $orderBy = array())
     {
-        $raw = $this->manager->findAll($this->getEntityName(), $criteria);
+        $raw = $this->manager->findAll($this->getEntityName(), $criteria, $orderBy);
 
         return $this->hydrateCollection($raw);
     }

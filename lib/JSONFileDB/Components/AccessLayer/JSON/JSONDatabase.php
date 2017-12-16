@@ -22,6 +22,7 @@ class JSONDatabase implements Database
     private $directory;
     private $mode;
     private $fileExtension;
+    private $tables = array();
 
     /**
      * JSONDatabase constructor.
@@ -46,10 +47,13 @@ class JSONDatabase implements Database
         $this->fileExtension = substr($databaseFileExtension, 0, 1) != '.' ? '.'.$databaseFileExtension : $databaseFileExtension;
     }
 
-
     public function getTable($name)
     {
-        return new JSONTable($name, $this);
+        if (!$this->tables[$name]) {
+            $this->tables[$name] = new JSONTable($name, $this);
+        }
+
+        return $this->tables[$name];
     }
 
     public function getTables()
@@ -93,5 +97,10 @@ class JSONDatabase implements Database
     }
 
 
-
+    public function commit()
+    {
+        foreach ($this->tables as $table) {
+            $table->write();
+        }
+    }
 }

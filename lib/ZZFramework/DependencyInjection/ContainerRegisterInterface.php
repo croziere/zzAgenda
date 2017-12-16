@@ -10,8 +10,19 @@
 
 namespace ZZFramework\DependencyInjection;
 
-
+/**
+ * Interface ContainerRegisterInterface
+ * Must be implemented by extensions class
+ * to extend the container
+ * @package ZZFramework\DependencyInjection
+ */
 interface ContainerRegisterInterface
 {
+    /**
+     * Visitor pattern
+     * This method is called during Container building
+     * to register extensions (service and definitions)
+     * @param ContainerBuilderInterface $container
+     */
     public function registerExtensions(ContainerBuilderInterface $container);
 }

@@ -11,6 +11,15 @@
 namespace JSONFileDB\Components\Orm\Hydrator;
 
 
+use JSONFileDB\Components\Orm\Exception\MissingFieldException;
+use JSONFileDB\Components\Orm\Exception\NoIdFieldException;
+
+/**
+ * Class ReflectionHydrator
+ * Hydrate a php class from array data row using reflection api
+ * @package JSONFileDB\Components\Orm\Hydrator
+ * @author Benjamin Roziere <benjamin.roziere@ov-corporation.com>
+ */
 class ReflectionHydrator implements HydratorInterface
 {
 
@@ -23,7 +32,7 @@ class ReflectionHydrator implements HydratorInterface
 
     /**
      * ReflectionHydrator constructor.
-     * @param $class
+     * @param mixed $class
      * @param int $strategy
      */
     public function __construct($class, $strategy = ReflectionHydrator::EXCEPTION_STRATEGY)
@@ -32,7 +41,9 @@ class ReflectionHydrator implements HydratorInterface
         $this->strategy = $strategy;
     }
 
-
+    /**
+     * @inheritdoc
+     */
     public function hydrateOne($row)
     {
         $object = $this->class->newInstanceWithoutConstructor();
@@ -50,6 +61,9 @@ class ReflectionHydrator implements HydratorInterface
         return $object;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function hydrateCollection($collection)
     {
         $results = array();
@@ -63,7 +77,7 @@ class ReflectionHydrator implements HydratorInterface
     private function hydrateProperty($object, \ReflectionObject $ref, $property, $value)
     {
         if (!$ref->hasProperty($property) && $this->strategy === ReflectionHydrator::EXCEPTION_STRATEGY) {
-            throw new \Exception(sprintf("Entity %s has no property named %s!", $ref->getName(), $property));
+            throw new MissingFieldException($property, $ref->getName());
         }
 
         $this->setPrivateValue($object, $ref, $property, $value);
@@ -71,17 +85,18 @@ class ReflectionHydrator implements HydratorInterface
 
     private function hydrateId($object, \ReflectionObject $ref, $idValue) {
         if (!$ref->hasProperty("id")) {
-            throw new \Exception(sprintf("Entity %s must have property named 'id'!", $ref->getName()));
+            throw new NoIdFieldException($ref->getName());
         }
 
         $this->setPrivateValue($object, $ref, "id", $idValue);
     }
 
     /**
-     * @param $object
-     * @param \ReflectionObject $ref
-     * @param $property
-     * @param $value
+     * Set the value of a private member
+     * @param mixed $object The object to set the value to
+     * @param \ReflectionObject $ref The reflection of $object
+     * @param string $property The property name
+     * @param mixed $value The value to set
      */
     private function setPrivateValue($object, \ReflectionObject $ref, $property, $value)
     {

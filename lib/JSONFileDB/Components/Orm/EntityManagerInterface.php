@@ -10,7 +10,10 @@
 
 namespace JSONFileDB\Components\Orm;
 
-
+/**
+ * Interface EntityManagerInterface
+ * @package JSONFileDB\Components\Orm
+ */
 interface EntityManagerInterface
 {
     public function find($name, $id);
@@ -21,6 +24,6 @@ interface EntityManagerInterface
 
     public function flush();
 
-    public function findAll($entity, $criteria);
+    public function findAll($entity, array $criteria, array $orderBy = array());
 
 }

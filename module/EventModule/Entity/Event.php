@@ -11,6 +11,7 @@ namespace EventModule\Entity;
 
 class Event
 {
+    private $id;
     private $title;
     private $description;
     private $speaker;
@@ -114,6 +115,13 @@ class Event
         $this->location = $location;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
 
 }

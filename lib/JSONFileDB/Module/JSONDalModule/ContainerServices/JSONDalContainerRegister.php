@@ -24,7 +24,6 @@ class JSONDalContainerRegister implements ContainerRegisterInterface
     public function registerExtensions(ContainerBuilderInterface $container)
     {
         $databaseInst = new JSONDatabase($container->get('kernel')->getAppRootDir().'/db/', JSONDatabase::READ_WRITE);
-
         $managerInst = new EntityManager($databaseInst);
 
         $orm = new Orm($managerInst);
