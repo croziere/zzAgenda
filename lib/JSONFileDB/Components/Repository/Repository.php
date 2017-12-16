@@ -12,8 +12,16 @@ namespace JSONFileDB\Components\Repository;
 
 
 use JSONFileDB\Components\Orm\EntityManagerInterface;
+use JSONFileDB\Components\Orm\Hydrator\HydratorInterface;
 use JSONFileDB\Components\Orm\Hydrator\ReflectionHydrator;
 
+/**
+ * Class Repository
+ * Base implementation of commons methods
+ * Delegate finding methods to the manager
+ * @package JSONFileDB\Components\Repository
+ * @author Benjamin Roziere <benjamin.roziere@ov-corporation.com>
+ */
 abstract class Repository implements RepositoryInterface
 {
     /**
@@ -23,6 +31,9 @@ abstract class Repository implements RepositoryInterface
 
     private $name;
 
+    /**
+     * @var HydratorInterface
+     */
     private $hydrator;
 
     /**
@@ -35,11 +46,17 @@ abstract class Repository implements RepositoryInterface
         $this->hydrator = new ReflectionHydrator($this->getClassName());
     }
 
-
+    /**
+     * Set the manager to use
+     * @param EntityManagerInterface $manager
+     */
     public function setManager(EntityManagerInterface $manager) {
         $this->manager = $manager;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function find($id)
     {
         $raw = $this->manager->find($this->getClassName(), $id);
@@ -48,6 +65,8 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
+     * Returns true if the $class
+     * can be handled by the repository
      * @param $class
      * @return bool
      */
@@ -56,11 +75,17 @@ abstract class Repository implements RepositoryInterface
         return $class === $this->getClassName();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function hydrateCollection(array $collection)
     {
         return $this->hydrator->hydrateCollection($collection);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function findBy(array $criteria, array $orderBy = array())
     {
         $raw = $this->manager->findAll($this->getEntityName(), $criteria, $orderBy);
@@ -68,20 +93,27 @@ abstract class Repository implements RepositoryInterface
         return $this->hydrateCollection($raw);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function findAll()
     {
         return $this->findBy(array());
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getEntityName()
     {
         return $this->name;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function hydrate($entity)
     {
         return $this->hydrator->hydrateOne($entity);
     }
-
-
 }
