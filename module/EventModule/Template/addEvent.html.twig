@@ -10,8 +10,8 @@ Ajouter un evenement
             <legend><a href="http://www.jquery2dotnet.com"><i class="glyphicon glyphicon-globe"></i></a> Evenement</legend>
 
             <form action="#" method="post" class="form" role="form">
-            <input class="form-control" name="eventName" placeholder="Nom de l'évènement" type="text" />
-            <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required" placeholder="Message"></textarea>
+            <input class="form-control" name="title" placeholder="Nom de l'évènement" type="text" value="{{ event.title }}" />
+            <textarea name="description" id="message" class="form-control" rows="9" cols="25" required="required" placeholder="Message">{{ event.description }}</textarea>
             <label for="">
                 Date de l'évènement</label>
             <div class="row">
@@ -35,7 +35,7 @@ Ajouter un evenement
             <label>Lieu</label>
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <select class="form-control">
+                    <select name="location" class="form-control">
                         <option value="Tipo">Batiment commun : G110</option>
                         <option value="Tipo">Batiment commun : G020</option>
                         <option value="Tipo">Batiment isima : A110</option>

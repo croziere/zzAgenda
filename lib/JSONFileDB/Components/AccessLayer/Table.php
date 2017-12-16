@@ -10,7 +10,11 @@
 
 namespace JSONFileDB\Components\AccessLayer;
 
-
+/**
+ * Interface Table
+ * Represents a table in a db
+ * @package JSONFileDB\Components\AccessLayer
+ */
 interface Table
 {
     /**
@@ -19,7 +23,7 @@ interface Table
     public function create();
 
     /**
-     * Drop the database
+     * Drop the table
      */
     public function drop();
 
@@ -27,12 +31,6 @@ interface Table
      * Truncate the table
      */
     public function truncate();
-
-    /**
-     * Insert an array to the table
-     * @param array $data
-     */
-    public function insert(array $data);
 
     /**
      * Alter the table name
@@ -57,12 +55,6 @@ interface Table
      * @return bool
      */
     public function exists(): bool;
-
-    /**
-     * Return the raw table data
-     * @return array
-     */
-    public function raw(): array;
 
     /**
      * Write the data to the table

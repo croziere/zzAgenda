@@ -16,18 +16,27 @@ use ZZFramework\DependencyInjection\Injectable\Reference;
 
 /**
  * Class ContainerBuilder
- *
+ * Implements a editable container
  * @package ZZFramework\DependencyInjection
  * @author Benjamin Roziere <benjamin.roziere@ov-corporation.com>
  */
 class ContainerBuilder extends Container implements ContainerBuilderInterface
 {
+    /**
+     * @var array Extensions classes
+     */
     private $registers = array();
+
+    /**
+     * @var array Service definitions
+     */
     private $definitions = array();
 
     /**
+     * Returns an instance of a service
+     * Build it if it's a definition, otherwise return the instance
      * @param $id
-     * @return mixed|object
+     * @return mixed
      */
     public function get($id) {
         $id = strtolower($id);
@@ -49,6 +58,9 @@ class ContainerBuilder extends Container implements ContainerBuilderInterface
         return $service;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function set($id, $service)
     {
         $id = strtolower($id);
@@ -64,6 +76,12 @@ class ContainerBuilder extends Container implements ContainerBuilderInterface
         parent::set($id, $service);
     }
 
+    /**
+     * Create a service from a definition
+     * @param Definition $definition
+     * @param $id
+     * @return object
+     */
     private function createService(Definition $definition,  $id) {
         $arguments = $this->resolveDependencies($definition->getArguments());
 
@@ -77,6 +95,11 @@ class ContainerBuilder extends Container implements ContainerBuilderInterface
         return $service;
     }
 
+    /**
+     * Resolve all dependencies
+     * @param $value
+     * @return array|mixed
+     */
     private function resolveDependencies($value) {
 
         if(is_array($value)) {
@@ -91,26 +114,47 @@ class ContainerBuilder extends Container implements ContainerBuilderInterface
         return $value;
     }
 
+    /**
+     * Call a method on a class
+     * @param $service
+     * @param $callable
+     */
     private function callMethod($service, $callable) {
         call_user_func_array(array($service, $callable[0]), $this->resolveDependencies($callable[1]));
     }
 
+    /**
+     * @inheritdoc
+     */
     public function register($id, Definition $definition) {
         $id = strtolower($id);
 
         return $this->definitions[$id] = $definition;
     }
 
+    /**
+     * Add an extension class
+     * @param ContainerRegisterInterface $extension
+     */
     public function addRegister(ContainerRegisterInterface $extension) {
         $this->registers[] = $extension;
     }
 
+    /**
+     * Build the container
+     */
     public function build() {
         foreach ($this->registers as $r) {
             $r->registerExtensions($this);
         }
     }
 
+    /**
+     * Add a definition
+     * @param $id
+     * @param $definition
+     * @internal
+     */
     private function addDefinition($id, $definition)
     {
         $this->definitions[$id] = $definition;

@@ -10,7 +10,11 @@
 
 namespace JSONFileDB\Components\AccessLayer;
 
-
+/**
+ * Interface Database
+ * Represents a database made of tables
+ * @package JSONFileDB\Components\AccessLayer
+ */
 interface Database
 {
     /**
@@ -19,5 +23,14 @@ interface Database
      */
     public function getTable($name);
 
+    /**
+     * Returns all available table name
+     * @return array
+     */
     public function getTables();
+
+    /**
+     * Commit the changes to the db
+     */
+    public function commit();
 }

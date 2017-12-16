@@ -11,10 +11,34 @@ namespace EventModule\Entity;
 
 class Event
 {
+    /**
+     * @Mapped
+     */
+    private $id;
+
+    /**
+     * @Mapped
+     */
     private $title;
+
+    /**
+     * @Mapped
+     */
     private $description;
+
+    /**
+     * @Mapped
+     */
     private $speaker;
+
+    /**
+     * @Mapped
+     */
     private $dateTime;
+
+    /**
+     * @Mapped
+     */
     private $location;
 
     /**
@@ -25,7 +49,7 @@ class Event
      * @param $dateTime
      * @param $location
      */
-    public function __construct($title, $description, $speaker, $dateTime, $location)
+    public function __construct($title = '', $description = '', $speaker = '', $dateTime = '', $location = '')
     {
         $this->title = $title;
         $this->description = $description;
@@ -114,6 +138,13 @@ class Event
         $this->location = $location;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
 
 }

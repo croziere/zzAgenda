@@ -10,7 +10,10 @@
 
 namespace ZZFramework\Security\User;
 
-
+/**
+ * Interface UserProviderInterface
+ * @package ZZFramework\Security\User
+ */
 interface UserProviderInterface
 {
     /**

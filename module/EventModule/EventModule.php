@@ -15,10 +15,23 @@ class EventModule extends Module
 {
     public function boot()
     {
+        $this->container->get('orm')->addRepository($this->container->get('repository.event'));
+
+
         $this->addRoute('getEvents', '/', ':Event:Event:getEvents');
-        //$this->addRoute('getEvents', '/events', ':Event:Event:getEvents');
-        $this->addRoute('getEvent', '/event/:eventName', ':Event:Event:getEvent', array(
-            'eventName' => 'a-zA-Z0-9'
+
+        $this->addRoute('event.add', "/event/new", ':Event:Event:addEvent');
+
+        $this->addRoute('getEvent', '/event/:id', ':Event:Event:getEvent', array(
+            'id' => 'a-zA-Z0-9-'
+        ));
+
+        $this->addRoute('event.delete', '/event/delete/:id', ':Event:Event:deleteEvent', array(
+            'id' => 'a-zA-Z0-9-',
+        ));
+
+        $this->addRoute('event.edit', '/event/edit/:id', ':Event:Event:editEvent', array(
+            'id' => 'a-zA-Z0-9-',
         ));
     }
 }

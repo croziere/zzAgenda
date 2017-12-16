@@ -15,6 +15,13 @@ use JSONFileDB\Components\Repository\Repository;
 use JSONFileDB\Components\Repository\RepositoryInterface;
 use ZZFramework\Http\ParametersBag;
 
+/**
+ * Class Orm
+ * Orm handling repository <-> EntityManager relations
+ * Facade to the orm system
+ * @package JSONFileDB\Components\Orm
+ * @author Benjamin Roziere <benjamin.roziere@ov-corporation.com>
+ */
 class Orm
 {
     protected $entityManager;
@@ -26,7 +33,7 @@ class Orm
 
     /**
      * Orm constructor.
-     * @param $entityManager
+     * @param $entityManager EntityManagerInterface
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -45,11 +52,14 @@ class Orm
     /**
      * @return array
      */
-    public function getRepositories(): array
+    public function getRepositories()
     {
         return $this->repositories->all();
     }
 
+    /**
+     * @param RepositoryInterface $repository
+     */
     public function addRepository(RepositoryInterface $repository)
     {
         if ($repository instanceof Repository) {

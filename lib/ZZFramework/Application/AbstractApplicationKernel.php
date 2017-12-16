@@ -52,6 +52,9 @@ abstract class AbstractApplicationKernel implements ApplicationKernelInterface
         return $this->modules;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getModule($name)
     {
         if(!isset($this->modules[$name])) {
@@ -112,12 +115,18 @@ abstract class AbstractApplicationKernel implements ApplicationKernelInterface
         return $this->environment;
     }
 
-    public function isDebug()
+    /**
+     * @inheritdoc
+     */
+    public function isDebug(): bool
     {
         return $this->debug;
     }
 
-    public function getAppRootDir()
+    /**
+     * @inheritdoc
+     */
+    public function getAppRootDir(): string
     {
         if(null === $this->rootDir) {
             $r = new \ReflectionObject($this);
@@ -127,7 +136,10 @@ abstract class AbstractApplicationKernel implements ApplicationKernelInterface
         return $this->rootDir;
     }
 
-    public function getCacheDir()
+    /**
+     * @inheritdoc
+     */
+    public function getCacheDir(): string
     {
         return $this->rootDir.'/cache/';
     }

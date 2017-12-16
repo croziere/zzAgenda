@@ -53,7 +53,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param mixed $username
+     * @param string $username
      */
     public function setUsername($username)
     {

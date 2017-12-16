@@ -15,16 +15,31 @@ use ZZFramework\DependencyInjection\ContainerRegisterInterface;
 use ZZFramework\DependencyInjection\Injectable\ContainerAware;
 use ZZFramework\Routing\Route;
 
+/**
+ * Class Module
+ * This class implements a base of ModuleInterface
+ * Add convenient methods
+ * @see ModuleInterface
+ * @package ZZFramework\Application\Module
+ * @author Benjamin Roziere <benjamin.roziere@ov-corporation.com>
+ */
 abstract class Module extends ContainerAware implements ModuleInterface
 {
     protected $name;
     protected $containerRegister;
     protected $path;
 
+    /**
+     * @inheritdoc
+     */
     public function boot() {
 
     }
 
+    /**
+     * Return the container extension of this module
+     * @return bool|null|ContainerRegisterInterface
+     */
     public function getContainerRegister() {
 
         if(null === $this->containerRegister) {
@@ -50,12 +65,21 @@ abstract class Module extends ContainerAware implements ModuleInterface
         return null;
     }
 
+    /**
+     * Return the container extension classpath
+     * Must be in ContainerServices folder
+     * Must be named <ModuleName>ContainerRegister
+     * @return string
+     */
     public function getContainerRegisterClass() {
         $name = preg_replace('/Module$/', '', $this->getName());
         return $this->getNamespace().'\\ContainerServices\\'.$name.'ContainerRegister';
     }
 
-    public final function getName()
+    /**
+     * @inheritdoc
+     */
+    public final function getName(): string
     {
         if(null !== $this->name) {
             return $this->name;
@@ -66,12 +90,20 @@ abstract class Module extends ContainerAware implements ModuleInterface
         return $this->name = false === $pos ? $name : substr($name, $pos + 1);
     }
 
+    /**
+     * Returns the namespace of the module
+     * @return string
+     */
     public final function getNamespace() {
         $ns = get_class($this);
 
         return substr($ns, 0, strrpos($ns, '\\'));
     }
 
+    /**
+     * Returns the path of this file
+     * @return string
+     */
     public final function getPath() {
         if(null === $this->path) {
             $r = new \ReflectionObject($this);
@@ -81,6 +113,7 @@ abstract class Module extends ContainerAware implements ModuleInterface
     }
 
     /**
+     * Convenience method to register a route in the router
      * @param $id
      * @param string $path
      * @param $controller

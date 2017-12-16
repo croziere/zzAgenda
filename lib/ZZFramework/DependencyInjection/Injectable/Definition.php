@@ -34,14 +34,17 @@ class Definition
     }
 
     /**
-     * @return mixed
+     * Returns the class to instantiate
+     * @return string
      */
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
 
     /**
+     * Set the class to instantiate
+     * Fluent
      * @param mixed $class
      * @return $this
      */
@@ -52,6 +55,8 @@ class Definition
     }
 
     /**
+     * Add a constructor argument
+     * Fluent
      * @param $argument
      * @return $this
      */
@@ -62,6 +67,7 @@ class Definition
     }
 
     /**
+     * Returns the constructor arguments
      * @return array
      */
     public function getArguments()
@@ -70,6 +76,8 @@ class Definition
     }
 
     /**
+     * Add a call to a method
+     * Fluent
      * @param $method
      * @param array $arguments
      * @return $this
@@ -81,6 +89,7 @@ class Definition
     }
 
     /**
+     * Returns all method calls
      * @return array
      */
     public function getMethodCalls()
