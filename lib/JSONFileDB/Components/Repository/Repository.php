@@ -38,12 +38,13 @@ abstract class Repository implements RepositoryInterface
 
     /**
      * Repository constructor.
+     * @param null $hydrator
      */
-    public function __construct()
+    public function __construct($hydrator = null)
     {
         $nsPart = explode('\\', $this->getClassName());
         $this->name = end($nsPart);
-        $this->hydrator = new ReflectionHydrator($this->getClassName());
+        $this->hydrator = $hydrator ? $hydrator : new ReflectionHydrator($this->getClassName());
     }
 
     /**

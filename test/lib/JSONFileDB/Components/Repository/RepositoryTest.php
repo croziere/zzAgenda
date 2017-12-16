@@ -10,61 +10,35 @@
 
 namespace JSONFileDB\Components\Repository;
 
+use JSONFileDB\Components\Orm\Hydrator\HydratorInterface;
 use PHPUnit\Framework\TestCase;
+
 
 class RepositoryTest extends TestCase
 {
+    const ENTITY_FQN_CLASS = 'JSONFileDB\Components\Mock\MockEntity';
+    const ENTITY_SHORT_NAME = 'MockEntity';
 
     public function test__construct()
     {
+        $repo = $this->createRepository(RepositoryTest::ENTITY_FQN_CLASS);
 
-    }
+        $this->assertEquals(RepositoryTest::ENTITY_FQN_CLASS, $repo->getClassName());
 
-    public function testSetManager()
-    {
-
-    }
-
-    public function testFind()
-    {
+        $this->assertEquals(RepositoryTest::ENTITY_SHORT_NAME, $repo->getEntityName());
 
     }
 
     public function testSupportsClass()
     {
+        $repo = $this->createRepository();
 
+        $this->assertTrue($repo->supportsClass(RepositoryTest::ENTITY_FQN_CLASS));
     }
 
-    public function testHydrateCollection()
-    {
+    protected function createRepository($entityClass = RepositoryTest::ENTITY_FQN_CLASS) {
+        $mockHydrator = $this->createMock(HydratorInterface::class);
 
-    }
-
-    public function testFindBy()
-    {
-
-    }
-
-    public function testFindAll()
-    {
-
-    }
-
-    public function testGetEntityName()
-    {
-
-    }
-
-    public function testHydrate()
-    {
-
-    }
-
-    protected function createRepository() {
-        $stubRepository = $this->getMockForAbstractClass(Repository::class, array(), '', false);
-
-        $stubRepository->expects($this->any())
-            ->method('getClassName')
-            ->willReturn('Namespace1/Namespace2/TestEntity');
+        return new MockRepository($entityClass, $mockHydrator);
     }
 }
