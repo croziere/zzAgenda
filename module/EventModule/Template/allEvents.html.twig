@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block css %}
-    <link rel="stylesheet" href="css/admin.css">{% endblock %}
+    <link rel="stylesheet" href="css/admin.css">
+{% endblock %}
 
 {% block title %}
     {{ trans(title) }}
@@ -11,16 +12,15 @@
     <div class="container">
         <div class="row">
             <h2>{{ trans('event.title.all') }}</h2>
-
+            <p><a href="/event/new">Ajouter un event</a></p>
             <table class="points_table">
                 <thead>
                 <tr>
-                    <th class="col-xs-2">{{ trans('event.title') }}</th>
-                    <th class="col-xs-6">{{ trans('event.description') }}</th>
-                    <th class="col-xs-1">{{ trans('event.date') }}</th>
-                    <th class="col-xs-1">{{ trans('event.speaker') }}</th>
-                    <th class="col-xs-1">{{ trans('event.location') }}</th>
-                    <th class="col-xs-1">{{ trans('event.delete') }}</th>
+                    <th class="col-xs-4">{{ trans('event.title') }}</th>
+                    <th class="col-xs-2">{{ trans('event.date') }}</th>
+                    <th class="col-xs-2">{{ trans('event.speaker') }}</th>
+                    <th class="col-xs-2">{{ trans('event.location') }}</th>
+                    <th class="col-xs-2">{{ trans('event.delete') }}</th>
                 </tr>
                 </thead>
 
@@ -28,16 +28,19 @@
                 {% for key,value in event_array %}
                     {% if  loop.index is odd %}
                         <tr class="odd"> {% else %} <tr class="even"> {% endif %}
-                    <td class="col-xs-2">{{ value.title }}</td>
-                    <td class="col-xs-6">{{ value.description }}</td>
-                    <td class="col-xs-1">{{ value.dateTime }}</td>
-                    <td class="col-xs-1">{{ value.speaker }}</td>
-                    <td class="col-xs-1">{{ value.location }}</td>
-                    <td class="col-xs-1">
+                    <td class="col-xs-4"><a href="/event/{{ value.id }}">{{ value.title }}</a></td>
+                    <td class="col-xs-2">{{ value.dateTime|date('d/m/Y') }}</td>
+                    <td class="col-xs-2">{{ value.speaker }}</td>
+                    <td class="col-xs-2">{{ value.location }}</td>
+                    <td class="col-xs-2">
                         <a class="btn icon-btn btn-danger" href="/event/delete/{{ value.id }}"><span
                                     class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger"></span>
                             Delete</a>
                     </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5">Aucun evènement. <a href="/event/new">Ajoutez en un !</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

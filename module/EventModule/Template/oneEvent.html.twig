@@ -5,40 +5,18 @@
 {% endblock %}
 
 {% block body %}
-<div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 well well-sm">
-            <legend><a href="http://www.jquery2dotnet.com"><i class="glyphicon glyphicon-globe"></i></a> Evenement</legend>
-            <input class="form-control" name="eventName" placeholder="Nom de l'évènement" value="{{ event.title }}" />
-            <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required" placeholder="Message">{{ event.description }}</textarea>
-            <label for="">
-                Date de l'évènement</label>
-            <div class="row">
-                <div class="col-xs-4 col-md-4">
-                    <select class="form-control">
-                        <option value="Day">{{ eventday }}</option>
-                    </select>
-                </div>
-                <div class="col-xs-4 col-md-4">
-                    <select class="form-control">
-                        <option value="Month">{{ eventmonth }}</option>
-                    </select>
-                </div>
-                <div class="col-xs-4 col-md-4">
-                    <select class="form-control">
-                        <option value="Year">{{ eventyear }}</option>
-                    </select>
-                </div>
-            </div>
-            <label>Lieu</label>
-            <div class="row">
-                <div class="col-xs-12 col-md-12">
-                    <select class="form-control">
-                        <option value="Tipo">{{ event.location }}</option>
-                    </select>
-                </div>    
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 well well-sm">
+                <a href="/">Retour à la liste</a> - <a href="/event/edit/{{ event.id }}">Modifier</a>
+                <h2>{{ event.title }}</h2>
+                <ul>
+                    <li>Le {{ event.datetime|date('d/m/Y') }}</li>
+                    <li>A {{ event.location }}</li>
+                    <li>Par {{ event.speaker }}</li>
+                </ul>
+                <p>{{ event.description|raw }}</p>
             </div>
         </div>
     </div>
-    
-    
 {% endblock %}

@@ -10,6 +10,7 @@ return array(
     'event.title.one' => 'Event',
     'event.title.all' => 'View all events',
     'event.title.add' => 'Add an event',
+    'event.title.edit' => 'Edit an event',
     'event.event' => 'Event',
     'event.title' => 'Title',
     'event.name' => 'Name',

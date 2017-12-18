@@ -56,6 +56,7 @@ class JSONTable implements Table
         }
 
         $this->data = new JSONDataSet($this, '[]');
+        $this->fileExists = true;
         $this->write();
     }
 

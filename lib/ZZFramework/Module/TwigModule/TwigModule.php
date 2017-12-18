@@ -15,5 +15,11 @@ use ZZFramework\Application\Module\Module;
 
 class TwigModule extends Module
 {
+    public function boot()
+    {
+        $listener = $this->container->get('twig.env.listener');
+        $dispatcher = $this->container->get('event_dispatcher');
 
+        $dispatcher->subscribeObservers($listener);
+    }
 }

@@ -108,7 +108,9 @@ class EventController extends Controller
 
         }
 
-        return $this->render('addEvent.html.twig');
+        return $this->render('addEvent.html.twig', array(
+            'title' => 'event.title.add'
+        ));
     }
 
     /**
@@ -144,6 +146,7 @@ class EventController extends Controller
 
         return $this->render('addEvent.html.twig', array(
             'event' => $event,
+            'title' => 'event.title.edit'
         ));
     }
 }
