@@ -44,6 +44,8 @@ class EventController extends Controller
      */
     public function getEventAction($id)
     {
+        $this->denyUnauthenticatedAccess();
+
         $repository = $this->getOrm()->getRepository(Event::class);
 
         $event = $repository->find($id);
@@ -64,6 +66,8 @@ class EventController extends Controller
      * @return \ZZFramework\Http\RedirectResponse
      */
     public function deleteEventAction($id) {
+        $this->denyUnlessGranted("ROLE_ADMIN");
+
         $mgr = $this->getOrm()->getManager();
 
         $event = $this->getOrm()->getRepository(Event::class)->find($id);
@@ -85,6 +89,8 @@ class EventController extends Controller
      * @return \ZZFramework\Http\Response
      */
     public function addEventAction(Request $request) {
+
+        $this->denyUnlessGranted("ROLE_ADMIN");
 
         if ($request->getMethod() === Request::METHOD_POST) {
 
@@ -116,10 +122,13 @@ class EventController extends Controller
 
     /**
      * Edit an existing event
+     * @param Request $request
      * @param $id
      * @return \ZZFramework\Http\Response
      */
     public function editEventAction(Request $request, $id) {
+
+        $this->denyUnlessGranted("ROLE_ADMIN");
 
         $event = $this->getOrm()->getRepository(Event::class)->find($id);
 

@@ -12,6 +12,7 @@ namespace ZZFramework\Security;
 
 
 use ZZFramework\Security\Authentication\Token\Token;
+use ZZFramework\Security\User\UserInterface;
 
 /**
  * Class Security
@@ -35,6 +36,10 @@ final class Security
         $this->firewall = $firewall;
     }
 
+    /**
+     * Return the currently connected user or null
+     * @return UserInterface|null
+     */
     public function getUser() {
         if (!$token = $this->getToken()) {
             return null;
@@ -48,8 +53,20 @@ final class Security
         return $user;
     }
 
+    /**
+     * Returns true whether the user is granted the role $role
+     * @param $role
+     * @return bool
+     */
     public function isGranted($role) {
+        $granted = false;
+        $user =  $this->getUser();
 
+        if ($user) {
+            $granted = in_array($role, $user->getRoles());
+        }
+
+        return $granted;
     }
 
     /**

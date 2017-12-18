@@ -72,6 +72,10 @@ abstract class Controller extends ContainerAware
         return $this->get('security')->getToken()->isAuthenticated();
     }
 
+    protected function isGranted($role) {
+        return $this->get('security')->isGranted($role);
+    }
+
     /**
      * Returns the current user or null
      * @return null|UserInterface
@@ -104,6 +108,12 @@ abstract class Controller extends ContainerAware
      */
     protected function denyUnauthenticatedAccess() {
         if (!$this->isAuthenticated()) {
+            throw new AccessDeniedException();
+        }
+    }
+
+    protected function denyUnlessGranted($role) {
+        if (!$this->isGranted($role)) {
             throw new AccessDeniedException();
         }
     }
