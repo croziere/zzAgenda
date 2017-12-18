@@ -70,9 +70,9 @@ abstract class Repository implements RepositoryInterface
 
     public function findOneBy(array $criteria)
     {
-        $raw = $this->manager->findAll($this->getEntityName(), $criteria);
+        $raw = $this->manager->findOne($this->getEntityName(), $criteria);
 
-        return $this->hydrate($raw[0]);
+        return $this->hydrate($raw);
     }
 
     public function findAll()

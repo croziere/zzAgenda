@@ -11,10 +11,10 @@
 namespace JSONFileDB\Components\AccessLayer\JSON;
 
 
-use JSONFileDB\Components\AccessLayer\Database;
+use JSONFileDB\Components\AccessLayer\DatabaseInterface;
 use JSONFileDB\Components\AccessLayer\Exception\AccessLayerException;
 
-class JSONDatabase implements Database
+class JSONDatabase implements DatabaseInterface
 {
     const READ_ONLY = 'r';
     const READ_WRITE = 'rw';

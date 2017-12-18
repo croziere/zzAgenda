@@ -46,15 +46,19 @@ class ReflectionHydrator implements HydratorInterface
      */
     public function hydrateOne($row)
     {
-        $object = $this->class->newInstanceWithoutConstructor();
+        $object = null;
 
-        $ref = new \ReflectionObject($object);
+        if ($row) {
+            $object = $this->class->newInstanceWithoutConstructor();
 
-        foreach ($row as $key => $value) {
-            if ($key === "_id") {
-                $this->hydrateId($object, $ref, $value);
-            } else {
-                $this->hydrateProperty($object, $ref, $key, $value);
+            $ref = new \ReflectionObject($object);
+
+            foreach ($row as $key => $value) {
+                if ($key === "_id") {
+                    $this->hydrateId($object, $ref, $value);
+                } else {
+                    $this->hydrateProperty($object, $ref, $key, $value);
+                }
             }
         }
 

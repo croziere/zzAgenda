@@ -15,7 +15,7 @@ namespace JSONFileDB\Components\AccessLayer;
  * Represents a database made of tables
  * @package JSONFileDB\Components\AccessLayer
  */
-interface Database
+interface DatabaseInterface
 {
     /**
      * @param $name

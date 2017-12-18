@@ -11,7 +11,7 @@
 namespace JSONFileDB\Components\Orm;
 
 
-use JSONFileDB\Components\AccessLayer\Database;
+use JSONFileDB\Components\AccessLayer\DatabaseInterface;
 
 final class Transaction
 {
@@ -24,7 +24,7 @@ final class Transaction
      * Transaction constructor.
      * @param $em
      */
-    public function __construct(EntityManagerInterface $em, Database $database)
+    public function __construct(EntityManagerInterface $em, DatabaseInterface $database)
     {
         $this->em = $em;
         $this->database = $database;

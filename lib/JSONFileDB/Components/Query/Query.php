@@ -64,7 +64,7 @@ class Query
     public function getSingleResult() {
         $this->execute();
 
-        return $this->results[0];
+        return reset($this->results);
     }
 
     private function applyCriterias($rawData, $criterias)
