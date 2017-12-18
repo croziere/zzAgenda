@@ -8,12 +8,12 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 well well-sm">
-                <a href="/">Retour à la liste</a> - <a href="/event/edit/{{ event.id }}">Modifier</a>
+                <a href="/">{{ trans('event.back') }}</a> - <a href="/event/edit/{{ event.id }}">{{ trans('event.action.edit') }}</a>
                 <h2>{{ event.title }}</h2>
                 <ul>
-                    <li>Le {{ event.datetime|date('d/m/Y') }}</li>
-                    <li>A {{ event.location }}</li>
-                    <li>Par {{ event.speaker }}</li>
+                    <li>{{ trans('event.at') }} {{ event.datetime|date('d/m/Y') }}</li>
+                    <li>{{ trans('event.where') }} {{ event.location }}</li>
+                    <li>{{ trans('event.who') }} {{ event.speaker }}</li>
                 </ul>
                 <p>{{ event.description|raw }}</p>
             </div>

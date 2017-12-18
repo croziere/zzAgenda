@@ -18,30 +18,30 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 well well-sm">
-                <p><a href="http://www.jquery2dotnet.com"><i class="glyphicon glyphicon-globe"></i></a> Evenement</p>
+                <p>{{ trans('event.title.one') }}</p>
 
                 <form action="#" method="post" class="form" role="form">
-                    <label for="title">Titre</label>
-                    <input class="form-control" name="title" id="title" required placeholder="Nom de l'évènement" type="text"
+                    <label for="title">{{ trans('event.title') }}</label>
+                    <input class="form-control" name="title" id="title" required placeholder="{{ trans('event.title') }}" type="text"
                            value="{{ event.title }}"/>
 
                     <label for="message">Description</label>
                     <textarea name="description" id="message" class="form-control" rows="9" cols="25"
-                              required="required" placeholder="Message">{{ event.description }}</textarea>
+                              required="required" placeholder="{{ trans('event.description') }}">{{ event.description }}</textarea>
 
                     <label for="datetime">
-                        Date de l'évènement</label>
+                        {{ trans('event.longDateTime') }}</label>
                     <input class="form-control" required type="date" name="datetime" id="datetime" value="{{ event.dateTime }}"/>
 
-                    <label for="speaker">Speaker</label>
+                    <label for="speaker">{{ trans('event.speaker') }}</label>
                     <input class="form-control" type="text" required id="speaker" name="speaker" value="{{ event.speaker }}"/>
 
-                    <label for="location">Lieu</label>
+                    <label for="location">{{ trans('event.location') }}</label>
                     <input class="form-control" required type="text" name="location" id="location" value="{{ event.location }}" />
 
                     <br>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">
-                        Ajouter l'évènement
+                        {{ trans(action) }}
                     </button>
                 </form>
             </div>

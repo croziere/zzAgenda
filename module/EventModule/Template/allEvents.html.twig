@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <h2>{{ trans('event.title.all') }}</h2>
-            <p><a href="/event/new">Ajouter un event</a></p>
+            <p><a href="/event/new">{{ trans('event.title.add') }}</a></p>
             <table class="points_table">
                 <thead>
                 <tr>
@@ -35,7 +35,7 @@
                     <td class="col-xs-2">
                         <a class="btn icon-btn btn-danger" href="/event/delete/{{ value.id }}"><span
                                     class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger"></span>
-                            Delete</a>
+                            {{ trans('event.delete') }}</a>
                     </td>
                     </tr>
                     {% else %}
