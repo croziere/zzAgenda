@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ trans(title) }}
+{% endblock %}
+
+{% block js_end %}
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#message').summernote();
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 well well-sm">
+                <p>{{ trans('event.title.one') }}</p>
+
+                <form action="#" method="post" class="form" role="form">
+                    <label for="title">{{ trans('event.title') }}</label>
+                    <input class="form-control" name="title" id="title" required placeholder="{{ trans('event.title') }}" type="text"
+                           value="{{ event.title }}"/>
+
+                    <label for="message">Description</label>
+                    <textarea name="description" id="message" class="form-control" rows="9" cols="25"
+                              required="required" placeholder="{{ trans('event.description') }}">{{ event.description }}</textarea>
+
+                    <label for="datetime">
+                        {{ trans('event.longDateTime') }}</label>
+                    <input class="form-control" required type="date" name="datetime" id="datetime" value="{{ event.dateTime }}"/>
+
+                    <label for="speaker">{{ trans('event.speaker') }}</label>
+                    <input class="form-control" type="text" required id="speaker" name="speaker" value="{{ event.speaker }}"/>
+
+                    <label for="location">{{ trans('event.location') }}</label>
+                    <input class="form-control" required type="text" name="location" id="location" value="{{ event.location }}" />
+
+                    <br>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">
+                        {{ trans(action) }}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+ /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    .flag {
+        width: 50px;
+        height: 50px;
+    }
+
+    .flag_dropdown {
+        width: 25px;
+        height: 25px;
+    }

@@ -1,0 +1,8 @@
+<footer class="container-fluid text-center">
+    {% if authenticated %}<a href="/logout">({{ user.username }}) {{ trans('user.logout') }}</a>{% endif %}
+    <p>© 2017 Benjamin ROZIERE | Alexis DELAHAYE | {{ trans('footer.copyright') }}</p>
+    <a href="#" class="fa fa-facebook fa-3x"></a>
+    <a href="#" class="fa fa-twitter fa-3x"></a>
+    <a href="#" class="fa fa-google fa-3x"></a>
+    <a href="mailto:latongue@etu.uca.fr" class="fa fa-envelope fa-3x"></a>
+</footer>

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Login{% endblock %}
+
+
+{% block css %}<link rel="stylesheet" href="css/login.css">{% endblock %}
+
+{% block body %}
+
+ <div class="modal-dialog">
+				<div class="loginmodal-container">
+					<h1>{{ trans('login.title') }}</h1><br>
+				  <form action="/login" method="post">
+					  {% if error %}
+						  <p>{{ error.message }}</p>
+					  {% endif %}
+					<input type="text" name="_username" placeholder="{{ trans('login.username') }}" value="{{ username }}">
+					<input type="password" name="_password" placeholder="{{ trans('login.password') }}" value="{{ password }}">
+					<input type="submit" name="login" class="login loginmodal-submit" value="{{ trans('login.sign') }}">
+				  </form>
+
+				  <div class="login-help">
+					<a href="mailto:registerZZ@genda.fr">Demandez un compte gratuit par mail</a> - <a href="#">Mot de passe oublié ? Tanpis</a>
+				  </div>
+				</div>
+</div>
+
+{% endblock %}

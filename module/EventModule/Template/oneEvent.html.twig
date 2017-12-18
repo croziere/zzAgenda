@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 well well-sm">
+                <a href="/">{{ trans('event.back') }}</a> - <a href="/event/edit/{{ event.id }}">{{ trans('event.action.edit') }}</a>
+                <h2>{{ event.title }}</h2>
+                <ul>
+                    <li>{{ trans('event.at') }} {{ event.datetime|date('d/m/Y') }}</li>
+                    <li>{{ trans('event.where') }} {{ event.location }}</li>
+                    <li>{{ trans('event.who') }} {{ event.speaker }}</li>
+                </ul>
+                <p>{{ event.description|raw }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
