@@ -26,4 +26,6 @@ interface EntityManagerInterface
 
     public function findAll($entity, array $criteria, array $orderBy = array());
 
+    public function findOne($entity, array $criteria);
+
 }

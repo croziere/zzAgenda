@@ -5,6 +5,10 @@
         {
             "name": "Benjamin Rozière",
             "email": "benjamin.roziere@rdalambic.com"
+        },
+        {
+            "name": "Alexis Delahaye",
+            "email": "alexis.delahaye@etu.uca.fr"
         }
     ],
     "require": {

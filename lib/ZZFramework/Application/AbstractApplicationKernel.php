@@ -149,6 +149,9 @@ abstract class AbstractApplicationKernel implements ApplicationKernelInterface
         // TODO: Implement registerContainerConfig() method.
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getContainer()
     {
         return $this->container;

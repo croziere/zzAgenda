@@ -11,7 +11,7 @@
 namespace JSONFileDB\Components\Orm;
 
 
-use JSONFileDB\Components\AccessLayer\Database;
+use JSONFileDB\Components\AccessLayer\DatabaseInterface;
 use JSONFileDB\Components\Orm\Serializer\ArrayEntitySerializer;
 use JSONFileDB\Components\Query\Query;
 
@@ -27,7 +27,7 @@ class EntityManager implements EntityManagerInterface
      * EntityManager constructor.
      * @param $database
      */
-    public function __construct(Database $database)
+    public function __construct(DatabaseInterface $database)
     {
         $this->database = $database;
         $this->transaction = new Transaction($this, $database);
@@ -66,6 +66,15 @@ class EntityManager implements EntityManagerInterface
         $query = new Query($dataSet, $criteria, $orderBy);
 
         return $query->getResults();
+    }
+
+    public function findOne($entity, array $criteria)
+    {
+        $dataSet = $this->database->getTable($this->getTableNameFromClass($entity))->select();
+
+        $query = new Query($dataSet, $criteria);
+
+        return $query->getSingleResult();
     }
 
     private function getTableNameFromClass($class) {

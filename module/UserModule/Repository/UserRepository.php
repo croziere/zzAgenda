@@ -20,22 +20,19 @@ class UserRepository extends Repository implements UserProviderInterface
 {
 
     /**
-     * @param $username
+     * @param string $username Actually uses email
      * @return UserInterface|null
      */
     public function loadUserByUsername($username)
     {
-        $user = new User();
-        $user->setUsername("Francis");
-        $user->setPassword('$2y$10$3WhmLVook4ITnS8FKh7qZ.soKEbQ620nFAQxECBHQCO5WV073UaJ6');
-        $user->setIsAdmin(false);
-        $user->setSalt("truc");
-        return $user;
+        $param = sprintf("e.username == '%s'", filter_var($username, FILTER_SANITIZE_STRING));
+
+        return $this->findOneBy(array($param));
     }
 
     public function refreshUser(UserInterface $user)
     {
-        return $user;
+        return $this->find($user->getId());
     }
 
     public function getClassName()

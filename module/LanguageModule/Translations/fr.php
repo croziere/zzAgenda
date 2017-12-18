@@ -15,6 +15,7 @@ return array(
     'event.name' => 'Nom',
     'event.description' => 'Description',
     'event.dateTime' => 'Date',
+    'event.longDateTime' => 'Date de l\'évènement',
     'event.location' => 'Lieu',
     'event.speaker' => 'Conférencier',
     'event.delete' => 'Supprimer',
@@ -22,11 +23,18 @@ return array(
     'event.day' => 'Jour',
     'event.month' => 'Mois',
     'event.year' => 'Année',
+    'event.action.add' => 'Ajouter l\'évènement',
+    'event.action.edit' => 'Editer l\'évènement',
+    'event.back' => 'Retour à la liste',
+    'event.at' => 'Le',
+    'event.where' => 'A',
+    'event.who' => 'Par',
 
     'login.title' => 'Se connecter',
     'login.username' => 'Nom d\'utilisateur',
     'login.password' => 'Mot de passe',
     'login.sign' => 'Se connecter',
+    'user.logout' => 'Déconnexion',
 
     'navbar.language' => 'Langage',
 

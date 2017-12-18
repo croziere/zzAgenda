@@ -15,8 +15,8 @@
 					  {% if error %}
 						  <p>{{ error.message }}</p>
 					  {% endif %}
-					<input type="text" name="_username" placeholder="Username" value="{{ username }}">
-					<input type="password" name="_password" placeholder="Password" value="{{ password }}">
+					<input type="text" name="_username" placeholder="{{ trans('login.username') }}" value="{{ username }}">
+					<input type="password" name="_password" placeholder="{{ trans('login.password') }}" value="{{ password }}">
 					<input type="submit" name="login" class="login loginmodal-submit" value="{{ trans('login.sign') }}">
 				  </form>
 

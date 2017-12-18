@@ -11,6 +11,7 @@
 namespace ZZFramework\Application;
 
 use ZZFramework\Application\Module\ModuleInterface;
+use ZZFramework\DependencyInjection\ContainerInterface;
 
 
 /**
@@ -80,6 +81,7 @@ interface ApplicationKernelInterface
 
     /**
      * Returns the DIC
+     * @return ContainerInterface
      */
     public function getContainer();
 }
