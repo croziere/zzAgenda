@@ -1,53 +1,51 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Ajouter un evenement
+    {{ trans(title) }}
+{% endblock %}
+
+{% block js_end %}
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#message').summernote();
+        });
+    </script>
 {% endblock %}
 
 {% block body %}
-<div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 well well-sm">
-            <legend><a href="http://www.jquery2dotnet.com"><i class="glyphicon glyphicon-globe"></i></a> Evenement</legend>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 well well-sm">
+                <p>{{ trans('event.title.one') }}</p>
 
-            <form action="#" method="post" class="form" role="form">
-            <input class="form-control" name="title" placeholder="Nom de l'évènement" type="text" value="{{ event.title }}" />
-            <textarea name="description" id="message" class="form-control" rows="9" cols="25" required="required" placeholder="Message">{{ event.description }}</textarea>
-            <label for="">
-                Date de l'évènement</label>
-            <div class="row">
-                <div class="col-xs-4 col-md-4">
-                    <select class="form-control">
-                        <option value="Day">Jour</option>
-                    </select>
-                </div>
-                <div class="col-xs-4 col-md-4">
-                    <select class="form-control">
-                        <option value="Month">Mois</option>
-                    </select>
-                </div>
-                <div class="col-xs-4 col-md-4">
-                    <select class="form-control">
-                        <option value="Year">2017</option>
-                        <option value="Year">2018</option>
-                    </select>
-                </div>
+                <form action="#" method="post" class="form" role="form">
+                    <label for="title">{{ trans('event.title') }}</label>
+                    <input class="form-control" name="title" id="title" required placeholder="{{ trans('event.title') }}" type="text"
+                           value="{{ event.title }}"/>
+
+                    <label for="message">Description</label>
+                    <textarea name="description" id="message" class="form-control" rows="9" cols="25"
+                              required="required" placeholder="{{ trans('event.description') }}">{{ event.description }}</textarea>
+
+                    <label for="datetime">
+                        {{ trans('event.longDateTime') }}</label>
+                    <input class="form-control" required type="date" name="datetime" id="datetime" value="{{ event.dateTime }}"/>
+
+                    <label for="speaker">{{ trans('event.speaker') }}</label>
+                    <input class="form-control" type="text" required id="speaker" name="speaker" value="{{ event.speaker }}"/>
+
+                    <label for="location">{{ trans('event.location') }}</label>
+                    <input class="form-control" required type="text" name="location" id="location" value="{{ event.location }}" />
+
+                    <br>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">
+                        {{ trans(action) }}
+                    </button>
+                </form>
             </div>
-            <label>Lieu</label>
-            <div class="row">
-                <div class="col-xs-12 col-md-12">
-                    <select name="location" class="form-control">
-                        <option value="Tipo">Batiment commun : G110</option>
-                        <option value="Tipo">Batiment commun : G020</option>
-                        <option value="Tipo">Batiment isima : A110</option>
-                        <option value="Tipo">Batiment isima : A129</option>
-                    </select>
-                </div>    
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">
-                Ajouter l'évènement</button>
-            </form>
         </div>
     </div>
-    
-    
+
 {% endblock %}

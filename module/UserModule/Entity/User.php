@@ -15,17 +15,40 @@ use ZZFramework\Security\User\UserInterface;
 
 class User implements UserInterface
 {
+    /**
+     * @Mapped
+     */
     private $id;
 
+    /**
+     * @Mapped
+     */
     private $username;
 
+    /**
+     * @Mapped
+     */
     private $email;
 
+    /**
+     * @Mapped
+     */
     private $password;
 
+    /**
+     * @Mapped
+     */
     private $salt;
 
+    /**
+     * @Mapped
+     */
     private $isAdmin;
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function getUsername()
     {

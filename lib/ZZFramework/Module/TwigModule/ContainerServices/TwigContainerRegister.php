@@ -16,6 +16,7 @@ use ZZFramework\DependencyInjection\ContainerBuilderInterface;
 use ZZFramework\DependencyInjection\ContainerRegisterInterface;
 use ZZFramework\DependencyInjection\Injectable\Definition;
 use ZZFramework\DependencyInjection\Injectable\Reference;
+use ZZFramework\Module\TwigModule\Listeners\EnvVarListener;
 
 class TwigContainerRegister implements ContainerRegisterInterface
 {
@@ -29,8 +30,14 @@ class TwigContainerRegister implements ContainerRegisterInterface
             'debug' => $container->get('kernel')->isDebug(),
         ));
 
+        $envVarListener = new Definition(EnvVarListener::class);
+        $envVarListener
+            ->addArgument(new Reference('templating'))
+            ->addArgument(new Reference('security'));
+
         $container->set('templating.loader', $loader);
         $container->set('templating', $twig);
+        $container->register('twig.env.listener', $envVarListener);
     }
 
     private function createTemplatingPaths(ApplicationKernelInterface $kernel) {

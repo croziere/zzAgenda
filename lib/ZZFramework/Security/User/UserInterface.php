@@ -13,6 +13,8 @@ namespace ZZFramework\Security\User;
 
 interface UserInterface
 {
+    public function getId();
+
     public function getUsername();
 
     public function getPassword();
