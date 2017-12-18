@@ -19,8 +19,6 @@ class EntityManager implements EntityManagerInterface
 {
     private $database;
 
-    private $transaction;
-
     private $serializer;
 
     /**
@@ -30,7 +28,6 @@ class EntityManager implements EntityManagerInterface
     public function __construct(DatabaseInterface $database)
     {
         $this->database = $database;
-        $this->transaction = new Transaction($this, $database);
         $this->serializer = new ArrayEntitySerializer();
     }
 

@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 well well-sm">
-                <a href="/">{{ trans('event.back') }}</a> - <a href="/event/edit/{{ event.id }}">{{ trans('event.action.edit') }}</a>
+                <a href="/">{{ trans('event.back') }}</a> {% if 'ROLE_ADMIN' in user.roles %}- <a href="/event/edit/{{ event.id }}">{{ trans('event.action.edit') }}</a>{% endif %}
                 <h2>{{ event.title }}</h2>
                 <ul>
                     <li>{{ trans('event.at') }} {{ event.datetime|date('d/m/Y') }}</li>
