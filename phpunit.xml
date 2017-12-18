@@ -8,8 +8,6 @@
          bootstrap="app/bootstrap.php.cache">
     <php>
         <ini name="error_reporting" value="-1" />
-        <server name="KERNEL_DIR" value="app/" />
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
     </php>
 
     <testsuites>
@@ -17,4 +15,11 @@
             <directory>test</directory>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>lib</directory>
+            <directory>src</directory>
+        </whitelist>
+    </filter>
 </phpunit>

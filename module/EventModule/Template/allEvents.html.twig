@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <h2>{{ trans('event.title.all') }}</h2>
-            <p><a href="/event/new">{{ trans('event.title.add') }}</a></p>
+    {% if 'ROLE_ADMIN' in user.roles %}<p><a href="/event/new">{{ trans('event.title.add') }}</a></p>{% endif %}
             <table class="points_table">
                 <thead>
                 <tr>
@@ -20,7 +20,7 @@
                     <th class="col-xs-2">{{ trans('event.date') }}</th>
                     <th class="col-xs-2">{{ trans('event.speaker') }}</th>
                     <th class="col-xs-2">{{ trans('event.location') }}</th>
-                    <th class="col-xs-2">{{ trans('event.delete') }}</th>
+    {% if 'ROLE_ADMIN' in user.roles %}<th class="col-xs-2">{{ trans('event.delete') }}</th>{% endif %}
                 </tr>
                 </thead>
 
@@ -32,15 +32,15 @@
                     <td class="col-xs-2">{{ value.dateTime|date('d/m/Y') }}</td>
                     <td class="col-xs-2">{{ value.speaker }}</td>
                     <td class="col-xs-2">{{ value.location }}</td>
-                    <td class="col-xs-2">
+                    {% if 'ROLE_ADMIN' in user.roles %}<td class="col-xs-2">
                         <a class="btn icon-btn btn-danger" href="/event/delete/{{ value.id }}"><span
                                     class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger"></span>
                             {{ trans('event.delete') }}</a>
-                    </td>
+                    </td>{% endif %}
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="5">Aucun evènement. <a href="/event/new">Ajoutez en un !</a></td>
+                        <td colspan="5">Aucun evènement. {% if 'ROLE_ADMIN' in user.roles %}<a href="/event/new">Ajoutez en un !</a>{% endif %}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
